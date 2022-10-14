@@ -13,7 +13,7 @@ class AuthController extends Controller
     public function createUser(Request $request)
     {
         try {
-            //validated user
+            //validated users
                 $validateUser=Validator::make($request->all(),
             [
                 'name'=>'required',
