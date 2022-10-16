@@ -54,3 +54,14 @@ RUN composer install -q -n --no-ansi --no-dev --no-scripts --no-progress --prefe
   && chmod -R 777 storage bootstrap/cache \
   && php artisan optimize:clear \
   && php artisan optimize
+
+# KAFKA
+RUN git clone --depth 1 --branch v0.9.5 https://github.com/edenhill/librdkafka.git \
+    && ( \
+        cd librdkafka \
+        && ./configure \
+        && make \
+        && make install \
+    ) \
+    && pecl install rdkafka \
+    && echo "extension=rdkafka.so" > /usr/local/etc/php/conf.d/rdkafka.ini
