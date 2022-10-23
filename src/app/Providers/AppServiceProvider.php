@@ -3,6 +3,9 @@
 namespace App\Providers;
 
 use App\Interfaces\AuthServiceInterface;
+use App\Interfaces\AuthRepositoryInterface;
+
+use App\Repositories\AuthRepository;
 use App\Services\AuthService;
 use Illuminate\Support\ServiceProvider;
 
@@ -15,9 +18,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-            $this->app->bind(AuthServiceInterface::class, function () {
-                return new AuthService();
-            });
+        $this->app->bind(AuthServiceInterface::class, function () {
+            return new AuthService();
+        });
+
 
     }
 

@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    private $authService;
+    private AuthServiceInterface $authService;
 
     public function __construct(AuthServiceInterface $service)
     {

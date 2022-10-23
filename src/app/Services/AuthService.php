@@ -1,6 +1,7 @@
 <?php
 namespace App\Services;
 
+use App\Interfaces\AuthRepositoryInterface;
 use App\Interfaces\AuthServiceInterface;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -8,6 +9,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
+//class AuthService implements AuthServiceInterface {
+//
+//    private AuthRepositoryInterface $authRepository;
+//
+//    public function __construct(AuthRepositoryInterface $repository)
+//    {
+//        $this->authRepository=$repository;
+//    }
 class AuthService implements AuthServiceInterface {
     public function register(Request $request){
         try {
@@ -33,6 +42,7 @@ class AuthService implements AuthServiceInterface {
                 'password'=>Hash::make($request->password)
 
             ]);
+//            $user=$this->authRepository->create($request);
 
             return response()->json([
                 'status'=>true,
