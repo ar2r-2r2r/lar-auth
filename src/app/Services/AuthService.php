@@ -1,14 +1,15 @@
 <?php
 namespace App\Services;
 
+use App\Interfaces\AuthServiceInterface;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-class AuthService{
-    public function register($request){
+class AuthService implements AuthServiceInterface {
+    public function register(Request $request){
         try {
             //validated user
                 $validateUser=Validator::make($request->all(),

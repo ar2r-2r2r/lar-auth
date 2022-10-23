@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Interfaces\AuthServiceInterface;
 use App\Models\User;
 use App\Services\AuthService;
 use Illuminate\Http\Request;
@@ -14,7 +15,7 @@ class AuthController extends Controller
 {
     private $authService;
 
-    public function __construct(AuthService $service)
+    public function __construct(AuthServiceInterface $service)
     {
         $this->authService=$service;
     }
