@@ -12,14 +12,22 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
+    private $authService;
+
+    public function __construct(AuthService $service)
+    {
+        $this->authService=$service;
+    }
+
     //Create User
     public function createUser(Request $request){
-        return AuthService::register($request);
+        return $this->authService->register($request);
 
     }
     public function loginUser(Request $request)
     {
-        return AuthService::login($request);
+//        return AuthService::login($request);
+        return $this->authService->login($request);
 
     }
 }

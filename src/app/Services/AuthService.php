@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class AuthService{
-    public static function register($request){
+    public function register($request){
         try {
             //validated user
                 $validateUser=Validator::make($request->all(),
@@ -46,7 +46,7 @@ class AuthService{
         }
     }
 
-    public static function login(Request $request)
+    public function login(Request $request)
     {
         try {
             $validateUser = Validator::make($request->all(),
