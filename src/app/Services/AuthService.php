@@ -14,7 +14,7 @@ class AuthService{
                 $validateUser=Validator::make($request->all(),
             [
                 'name'=>'required',
-                'email'=>'required|email|unique|users,email',
+                'email'=>'required|email|unique:users,email',
                 'password'=>'required'
             ]);
 
@@ -46,41 +46,43 @@ class AuthService{
         }
     }
 
-    public static function login($request){
+    public static function login(Request $request)
+    {
         try {
-            //validated user
-                $validateUser=Validator::make($request->all(),
+            $validateUser = Validator::make($request->all(),
             [
-                'email'=>'required|email',
-                'password'=>'required'
+                'email' => 'required|email',
+                'password' => 'required'
             ]);
 
             if($validateUser->fails()){
                 return response()->json([
-                    'status'=>false,
-                    'message'=>'validation error',
-                    'errors'=>$validateUser->errors()
-                ],401);
+                    'status' => false,
+                    'message' => 'validation error',
+                    'errors' => $validateUser->errors()
+                ], 401);
             }
 
             if(!Auth::attempt($request->only(['email', 'password']))){
                 return response()->json([
-                    'status'=>false,
-                    'message'=>'Email and Password doesnt math with our record'
-                ],401);
+                    'status' => false,
+                    'message' => 'Email & Password does not match with our record.',
+                ], 401);
             }
-        
-            $user=User::where('email', $request->email)->first();
+
+            $user = User::where('email', $request->email)->first();
+
             return response()->json([
-                'status'=>true,
-                'message'=>'User logged successfully',
-                'token'=>$user->createToken("API TOKEN")->plainTextToken
-            ],200);
+                'status' => true,
+                'message' => 'User Logged In Successfully',
+                'token' => $user->createToken("API TOKEN")->plainTextToken
+            ], 200);
+
         } catch (\Throwable $th) {
             return response()->json([
-                'status'=>false,
-                'message'=>$th->getMessage(),
-            ],500);
+                'status' => false,
+                'message' => $th->getMessage()
+            ], 500);
         }
     }
 }
