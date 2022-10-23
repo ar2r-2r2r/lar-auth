@@ -19,7 +19,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(AuthServiceInterface::class, function () {
-            return new AuthService();
+            return new AuthService(new AuthRepository());
         });
 
 

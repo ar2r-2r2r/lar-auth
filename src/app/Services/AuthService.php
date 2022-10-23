@@ -9,15 +9,15 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-//class AuthService implements AuthServiceInterface {
-//
-//    private AuthRepositoryInterface $authRepository;
-//
-//    public function __construct(AuthRepositoryInterface $repository)
-//    {
-//        $this->authRepository=$repository;
-//    }
 class AuthService implements AuthServiceInterface {
+
+    private AuthRepositoryInterface $authRepository;
+
+    public function __construct(AuthRepositoryInterface $repository)
+    {
+        $this->authRepository=$repository;
+    }
+//class AuthService implements AuthServiceInterface {
     public function register(Request $request){
         try {
             //validated user
@@ -36,13 +36,13 @@ class AuthService implements AuthServiceInterface {
                 ],401);
             }
 
-            $user = User::create([
-                'name'=>$request->name,
-                'email'=>$request->email,
-                'password'=>Hash::make($request->password)
-
-            ]);
-//            $user=$this->authRepository->create($request);
+//            $user = User::create([
+//                'name'=>$request->name,
+//                'email'=>$request->email,
+//                'password'=>Hash::make($request->password)
+//
+//            ]);
+            $user=$this->authRepository->create($request);
 
             return response()->json([
                 'status'=>true,
