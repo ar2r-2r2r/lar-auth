@@ -17,7 +17,6 @@ class AuthService implements AuthServiceInterface {
     {
         $this->authRepository=$repository;
     }
-//class AuthService implements AuthServiceInterface {
     public function register(Request $request){
         try {
             //validated user
@@ -81,7 +80,8 @@ class AuthService implements AuthServiceInterface {
                 ], 401);
             }
 
-            $user = User::where('email', $request->email)->first();
+//            $user = User::where('email', $request->email)->first();
+            $user=$this->authRepository->set($request);
 
             return response()->json([
                 'status' => true,
