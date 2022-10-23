@@ -12,7 +12,10 @@ class AuthController extends Controller
     public function createUser(Request $request)
     {
         AuthService::register($request);
-        
+    }
+    public function loginUser(Request $request)
+    {
+        AuthService::login($request);
     }
     
 }
