@@ -27,4 +27,27 @@ class UserController extends Controller
         }
     }
 
+    public function getName()
+    {
+        if(Auth::check()){
+            $name=auth()->user()->name;
+            return response()->json([
+                'status' => true,
+                'message' => "$name"
+            ], 200);
+        }
+    }
+    public function getId()
+    {
+        if(Auth::check()){
+            $id=auth()->user()->id;
+            return response()->json([
+                'status' => true,
+                'message' => "$id"
+            ], 200);
+        }
+    }
+
+
+
 }
