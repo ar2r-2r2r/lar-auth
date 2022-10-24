@@ -3,7 +3,9 @@ namespace App\Interfaces;
 
 
 interface UserServiceInterface{
-    public function isAuth();
-    public function getName();
-    public function getId();
+    public function isAuthJS();
+    public function getNameJS();
+    public function getIdJS();
+
+//    public function isAuthenticated();
 }

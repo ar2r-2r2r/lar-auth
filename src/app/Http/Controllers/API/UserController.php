@@ -19,16 +19,16 @@ class UserController extends Controller
     }
     public function isAuth()
     {
-        return $this->userService->isAuth();
+        return $this->userService->isAuthJS();
     }
 
     public function getName()
     {
-        return $this->userService->getName();
+        return $this->userService->getNameJS();
     }
     public function getId()
     {
-        return $this->userService->getId();
+        return $this->userService->getIdJS();
     }
 
 

@@ -13,7 +13,7 @@ class UserService implements UserServiceInterface {
     {
         $this->userRepository=$repository;
     }
-    public function isAuth()
+    public function isAuthJS()
     {
         if ($this->userRepository->check()) {
             $user=$this->userRepository->hasUser();
@@ -30,7 +30,7 @@ class UserService implements UserServiceInterface {
         }
     }
 
-    public function getName()
+    public function getNameJS()
     {
         if($this->userRepository->check()){
             $name=auth()->user()->name;
@@ -40,7 +40,7 @@ class UserService implements UserServiceInterface {
             ], 200);
         }
     }
-    public function getId()
+    public function getIdJS()
     {
         if($this->userRepository->check()){
             $id=auth()->user()->id;
