@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Interfaces\UserServiceInterface;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,42 +11,24 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
 
+    private UserServiceInterface $userService;
+
+    public function __construct(UserServiceInterface $service)
+    {
+        $this->userService=$service;
+    }
     public function isAuth()
     {
-        if (Auth::check()) {
-            $user=Auth::hasUser();
-            return response()->json([
-                'status' => true,
-                'message' => "$user"
-            ], 200);
-        }
-        else{
-            return response()->json([
-                'status' => true,
-                'message' => 'not auth'
-            ], 200);
-        }
+        return $this->userService->isAuth();
     }
 
     public function getName()
     {
-        if(Auth::check()){
-            $name=auth()->user()->name;
-            return response()->json([
-                'status' => true,
-                'message' => "$name"
-            ], 200);
-        }
+        return $this->userService->getName();
     }
     public function getId()
     {
-        if(Auth::check()){
-            $id=auth()->user()->id;
-            return response()->json([
-                'status' => true,
-                'message' => "$id"
-            ], 200);
-        }
+        return $this->userService->getId();
     }
 
 
