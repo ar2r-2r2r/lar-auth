@@ -50,4 +50,32 @@ class UserService implements UserServiceInterface {
             ], 200);
         }
     }
+
+    public function isAuthenticated(): bool
+    {
+        if ($this->userRepository->check()) {
+
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public function getName(): string
+    {
+        if($this->userRepository->check()){
+            return auth()->user()->name;
+        }
+        else return "cant check the user";
+    }
+
+    public function getId(): string|int
+    {
+        if($this->userRepository->check()){
+            return auth()->user()->id;
+        }
+        else return "cant check the user";
+
+    }
 }

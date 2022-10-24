@@ -7,5 +7,7 @@ interface UserServiceInterface{
     public function getNameJS();
     public function getIdJS();
 
-//    public function isAuthenticated();
+    public function isAuthenticated():bool;
+    public function getName():string;
+    public function getId():string|int;
 }
