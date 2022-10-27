@@ -13,9 +13,9 @@ class AuthService implements AuthServiceInterface {
 
     private AuthRepositoryInterface $authRepository;
 
-    public function __construct(AuthRepositoryInterface $repository)
+    public function __construct(AuthRepositoryInterface $authRepository)
     {
-        $this->authRepository=$repository;
+        $this->authRepository=$authRepository;
     }
     public function register(Request $request):array
     {

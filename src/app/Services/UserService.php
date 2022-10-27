@@ -9,9 +9,9 @@ class UserService implements UserServiceInterface {
 
     private UserRepositoryInterface $userRepository;
 
-    public function __construct(UserRepositoryInterface $repository)
+    public function __construct(UserRepositoryInterface $userRepository)
     {
-        $this->userRepository=$repository;
+        $this->userRepository=$userRepository;
     }
     public function isAuthJS()
     {

@@ -13,9 +13,9 @@ class UserController extends Controller
 
     private UserServiceInterface $userService;
 
-    public function __construct(UserServiceInterface $service)
+    public function __construct(UserServiceInterface $userService)
     {
-        $this->userService=$service;
+        $this->userService=$userService;
     }
     public function isAuth()
     {
