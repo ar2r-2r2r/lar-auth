@@ -20,18 +20,19 @@ class AuthController extends Controller
         $this->authService=$authService;
     }
 
-    //Create User
     public function createUser(Request $request){
         $response=$this->authService->register($request);
         $statusCode=array_pop($response);
         return response()->json($response,$statusCode);
     }
+
     public function loginUser(Request $request)
     {
         $response=$this->authService->login($request);
         $statusCode=array_pop($response);
         return response()->json($response,$statusCode);
     }
+
     public function logout(Request $request)
     {
         $response=$this->authService->logout($request);

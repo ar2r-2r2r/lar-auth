@@ -53,13 +53,7 @@ class UserService implements UserServiceInterface {
 
     public function isAuthenticated(): bool
     {
-        if ($this->userRepository->check()) {
-
-            return true;
-        }
-        else{
-            return false;
-        }
+        return $this->userRepository->check();
     }
 
     public function getName(): string
