@@ -17,9 +17,10 @@ class AuthService implements AuthServiceInterface {
     {
         $this->authRepository=$repository;
     }
-    public function register(Request $request){
+    public function register(Request $request):array
+    {
+
         try {
-            //validated user
                 $validateUser=Validator::make($request->all(),
             [
                 'name'=>'required',
@@ -28,25 +29,28 @@ class AuthService implements AuthServiceInterface {
             ]);
 
             if($validateUser->fails()){
-                return response()->json([
-                    'status'=>false,
+                return $response=[
+                    'status'=>'false',
                     'message'=>'validation error',
-                    'errors'=>$validateUser->errors()
-                ],401);
+                    'errors'=>$validateUser->errors(),
+                    'statusCode'=>401,
+                    ];
             }
 
             $user=$this->authRepository->create($request);
 
-            return response()->json([
+            return $response=[
                 'status'=>true,
                 'message'=>'User created successfully',
-                'token'=>$user->createToken("API TOKEN")->plainTextToken
-            ],200);
+                'token'=>$user->createToken("API TOKEN")->plainTextToken,
+                'statusCode'=>200,
+            ];
         } catch (\Throwable $th) {
-            return response()->json([
+            return $response=[
                 'status'=>false,
                 'message'=>$th->getMessage(),
-            ],500);
+                'statusCode'=>500,
+            ];
         }
     }
 
@@ -60,34 +64,39 @@ class AuthService implements AuthServiceInterface {
             ]);
 
             if($validateUser->fails()){
-                return response()->json([
+                return $response=[
                     'status' => false,
                     'message' => 'validation error',
-                    'errors' => $validateUser->errors()
-                ], 401);
+                    'errors' => $validateUser->errors(),
+                    'statusCode'=>401,
+                ];
             }
 
             if(!Auth::attempt($request->only(['email', 'password']))){
-                return response()->json([
+
+                return $response=[
                     'status' => false,
                     'message' => 'Email & Password does not match with our record.',
-                ], 401);
+                    'statusCode'=>401,
+                ];
             }
 
 //            $user = User::where('email', $request->email)->first();
             $user=$this->authRepository->set($request);
 
-            return response()->json([
+            return $response=[
                 'status' => true,
                 'message' => 'User Logged In Successfully',
-                'token' => $user->createToken("API TOKEN")->plainTextToken
-            ], 200);
+                'token' => $user->createToken("API TOKEN")->plainTextToken,
+                'statusCode'=>200,
+            ];
 
         } catch (\Throwable $th) {
-            return response()->json([
+            return $response=[
                 'status' => false,
-                'message' => $th->getMessage()
-            ], 500);
+                'message' => $th->getMessage(),
+                'statusCode'=>500,
+            ];
         }
     }
 
@@ -96,9 +105,10 @@ class AuthService implements AuthServiceInterface {
         Auth::guard('web')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return response()->json([
-            'status' => true,
-            'message' => 'User LogOut successfylly'
-        ], 200);
+        return $response=[
+            'status'=>true,
+            'message'=>'User logout successfully',
+            'statusCode'=>200,
+        ];
     }
 }
