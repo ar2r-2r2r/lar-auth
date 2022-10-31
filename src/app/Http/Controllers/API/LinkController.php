@@ -22,6 +22,10 @@ class LinkController extends Controller
     {
         return $this->linkService->updateLink($request);
     }
+    public function deleteLink(Request $request)
+    {
+        return $this->linkService->deleteLink($request);
+    }
     public function getUserLinks(Request $request)
     {
         return $this->linkService->getUserLinks($request);

@@ -31,12 +31,12 @@ class LinkRepository implements LinkRepositoryInterface
 
     public function delete(int|string $linkId)
     {
-        // TODO: Implement delete() method.
+        return LinkModel::where('id', $linkId)->delete
     }
 
-    public function getById(int|string $linkId)
+    public function getById(int|string $linkId):LinkModel
     {
-        // TODO: Implement getById() method.
+        return LinkModel::where('id', $linkId)->get('shortCode');
     }
 
     public function getByShortCode(string $shortCode)

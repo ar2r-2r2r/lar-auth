@@ -32,6 +32,7 @@ Route::post('/auth/id', [UserController::class, 'getId'])->middleware('auth:sanc
 
 Route::post('/link/create', [LinkController::class, 'createLink'])->middleware('auth:sanctum');
 Route::post('/link/update',[LinkController::class, 'updateLink'])->middleware('auth:sanctum');
+Route::post('/link/delete',[LinkController::class, 'deleteLink'])->middleware('auth:sanctum');
 Route::post('/link/getUserLinks',[LinkController::class, 'getUserLinks'])->middleware('auth:sanctum');
 Route::post('/link/getOriginalLink',[LinkController::class, 'getOriginalLink'])->middleware('auth:sanctum');
 
