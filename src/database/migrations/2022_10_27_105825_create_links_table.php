@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('links', function (Blueprint $table) {
             $table->id();
-            $table->increments('userId');
+            $table->string('userId');
             $table->string('originalUrl');
             $table->string('shortCode')->unique();
             $table->boolean('isPublic');
-            $table->dateTime('createdDate');
+            $table->dateTime('createdDate')->useCurrent();
             $table->timestamps();
         });
     }

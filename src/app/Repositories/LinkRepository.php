@@ -1,0 +1,57 @@
+<?php
+
+namespace App\Repositories;
+
+use App\Interfaces\LinkRepositoryInterface;
+use App\Models\LinkDetails;
+use App\Models\LinkModel;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
+use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
+
+
+class LinkRepository implements LinkRepositoryInterface
+{
+
+
+    public function create(int|string $userId, string $shortCode, LinkDetails $linkDetails)
+    {
+        return LinkModel::create([
+            'userId'=>$userId,
+            'originalUrl'=>$linkDetails->getOriginalUrl(),
+            'shortCode'=>$shortCode,
+            'isPublic'=>$linkDetails->getIsPublic(),
+        ]);
+    }
+
+    public function update(int|string $linkId, string $shortCode, LinkDetails $linkDetails)
+    {
+        return LinkModel::where('id', $linkId)->update(['shortCode'=>$shortCode]);
+    }
+
+    public function delete(int|string $linkId)
+    {
+        // TODO: Implement delete() method.
+    }
+
+    public function getById(int|string $linkId)
+    {
+        // TODO: Implement getById() method.
+    }
+
+    public function getByShortCode(string $shortCode)
+    {
+        // TODO: Implement getByShortCode() method.
+    }
+
+    public function getAll():Collection
+    {
+        return LinkModel::all('originalUrl','shortCode');
+    }
+
+    public function getAllByUser(int|string $userId):Collection
+    {
+        return LinkModel::where('userId', $userId)->get(['shortCode','originalUrl']);
+
+    }
+}
