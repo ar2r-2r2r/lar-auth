@@ -31,7 +31,7 @@ class LinkRepository implements LinkRepositoryInterface
 
     public function delete(int|string $linkId)
     {
-        return LinkModel::where('id', $linkId)->delete
+        return LinkModel::where('id', $linkId)->delete();
     }
 
     public function getById(int|string $linkId):LinkModel

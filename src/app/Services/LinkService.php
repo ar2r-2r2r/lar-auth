@@ -68,9 +68,9 @@ class LinkService implements LinkServiceInterface
         ], 200);
     }
 
-    public function deleteLink()
+    public function deleteLink(Request $request)
     {
-        // TODO: Implement deleteLink() method.
+        $result=$this->linkRepository->delete($request->linkId);
     }
 
     public function getUserLinks(Request $request)
