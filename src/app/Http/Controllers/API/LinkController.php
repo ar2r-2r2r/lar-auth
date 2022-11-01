@@ -4,6 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateLinkRequest;
+use App\Http\Requests\GetOriginalLinkRequest;
+use App\Http\Requests\GetUserLinksRequest;
+use App\Http\Requests\UpdateDelLinkRequest;
 use App\Interfaces\LinkServiceInterface;
 use Illuminate\Http\Request;
 
@@ -19,19 +22,19 @@ class LinkController extends Controller
     {
         return $this->linkService->createLink($request);
     }
-    public function updateLink(Request $request)
+    public function updateLink(UpdateDelLinkRequest $request)
     {
         return $this->linkService->updateLink($request);
     }
-    public function deleteLink(Request $request)
+    public function deleteLink(UpdateDelLinkRequest $request)
     {
         return $this->linkService->deleteLink($request);
     }
-    public function getUserLinks(Request $request)
+    public function getUserLinks(GetUserLinksRequest $request)
     {
         return $this->linkService->getUserLinks($request);
     }
-    public function getOriginalLink(Request $request)
+    public function getOriginalLink(GetOriginalLinkRequest $request)
     {
         return $this->linkService->getOriginalLink($request);
     }
