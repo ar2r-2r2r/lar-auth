@@ -41,9 +41,7 @@ class LinkService implements LinkServiceInterface
 
         $shortLink=Util::generateShortLink();
         $result=$this->linkRepository->create($id,$shortLink,$this->linkDetails);
-        return response()->json([
-            'result'=>"$result",
-        ], 200);
+        return $result;
     }
 
     public function updateLink(Request $request)
@@ -63,22 +61,18 @@ class LinkService implements LinkServiceInterface
         $linkId=$request->linkId;
         $shortLink=Util::generateShortLink();
         $result=$this->linkRepository->update($linkId,$shortLink,$this->linkDetails);
-        return response()->json([
-            'result'=>"$result",
-        ], 200);
+        return $result;
     }
 
     public function deleteLink(Request $request)
     {
-        $result=$this->linkRepository->delete($request->linkId);
+        $this->linkRepository->delete($request->linkId);
     }
 
     public function getUserLinks(Request $request)
     {
-        $result=$this->linkRepository->getAllByUser($request->userId);
-        return response()->json([
-            'result'=>"$result",
-        ], 200);
+        $userLinks=$this->linkRepository->getAllByUser($request->userId);
+        return $userLinks;
     }
 
     public function getOriginalLink(Request $request)
