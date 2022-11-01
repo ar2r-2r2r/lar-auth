@@ -8,6 +8,7 @@ use App\Models\LinkModel;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
+use Termwind\Components\Li;
 
 
 class LinkRepository implements LinkRepositoryInterface
@@ -26,13 +27,14 @@ class LinkRepository implements LinkRepositoryInterface
 
     public function update(int|string $linkId, string $shortCode, LinkDetails $linkDetails)
     {
-
-        return LinkModel::where('id', $linkId)->update(['shortCode'=>$shortCode]);
+        $currentUserId=auth()->user()->id;
+        return LinkModel::where('userId', $currentUserId)->where('id', $linkId)->update(['shortCode'=>$shortCode]);
     }
 
     public function delete(int|string $linkId)
     {
-        return LinkModel::where('id', $linkId)->delete();
+        $currentUserId=auth()->user()->id;
+        return LinkModel::where('userId', $currentUserId)->where('id', $linkId)->delete();
     }
 
     public function getById(int|string $linkId):LinkModel
@@ -45,6 +47,7 @@ class LinkRepository implements LinkRepositoryInterface
         $originalUrl='';
         $collectionLinks=$this->getAll();
         $collectionLinks->toArray();
+
         for($i=0;$i<count($collectionLinks);$i++) {
             if($shortCode==$collectionLinks[$i]['shortCode']){
                 $originalUrl=$collectionLinks[$i]['originalUrl'];
@@ -55,7 +58,10 @@ class LinkRepository implements LinkRepositoryInterface
 
     public function getAll():Collection
     {
-        return LinkModel::all('originalUrl','shortCode');
+        $currentUserId=auth()->user()->id;
+        $public=LinkModel::where('isPublic',1)->get(['shortCode', 'originalUrl']);          //public Url
+        $private=LinkModel::where('userId', $currentUserId)->where('isPublic', 0)->get(['shortCode','originalUrl']);    //private Url
+        return $all=$public->merge($private);
     }
 
     public function getAllByUser(int|string $userId):Collection
