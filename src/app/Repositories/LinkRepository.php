@@ -41,7 +41,15 @@ class LinkRepository implements LinkRepositoryInterface
 
     public function getByShortCode(string $shortCode)
     {
-        // TODO: Implement getByShortCode() method.
+        $originalUrl='';
+        $collectionLinks=$this->getAll();
+        $collectionLinks->toArray();
+        for($i=0;$i<count($collectionLinks);$i++) {
+            if($shortCode==$collectionLinks[$i]['shortCode']){
+                $originalUrl=$collectionLinks[$i]['originalUrl'];
+            }
+        }
+        return $originalUrl;
     }
 
     public function getAll():Collection

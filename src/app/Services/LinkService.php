@@ -83,22 +83,9 @@ class LinkService implements LinkServiceInterface
 
     public function getOriginalLink(Request $request)
     {
-        $orignalUrl=$request->originalUrl;
-        $shortCode='';
-        $collectionLinks=$this->linkRepository->getAll();
-        $collectionLinks->toArray();
-        for($i=0;$i<count($collectionLinks);$i++) {
-            if($orignalUrl==$collectionLinks[$i]['originalUrl']){
-                $shortCode=$collectionLinks[$i]['shortCode'];
-            }
-        }
-
-        return response()->json([
-            'result'=>"$collectionLinks",
-            'shortCode'=>"$shortCode",
-            'originalUrl'=>"$orignalUrl",
-        ], 200);
-
+        $shortCode=$request->shortCode;
+        $originalUrl=$this->linkRepository->getByShortCode($shortCode);
+        return $originalUrl;
     }
 
 
