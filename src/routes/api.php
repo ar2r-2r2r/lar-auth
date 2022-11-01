@@ -23,16 +23,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/auth/register', [AuthController::class, 'createUser']);
-Route::post('/auth/login', [AuthController::class, 'loginUser']);
-Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+Route::get('/auth/login', [AuthController::class, 'loginUser']);
+Route::get('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
-Route::post('/auth/is', [UserController::class, 'isAuth']);
-Route::post('/auth/name', [UserController::class, 'getName'])->middleware('auth:sanctum');
-Route::post('/auth/id', [UserController::class, 'getId'])->middleware('auth:sanctum');
+Route::get('/auth/is', [UserController::class, 'isAuth']);
+Route::get('/auth/name', [UserController::class, 'getName'])->middleware('auth:sanctum');
+Route::get('/auth/id', [UserController::class, 'getId'])->middleware('auth:sanctum');
 
 Route::post('/link/create', [LinkController::class, 'createLink'])->middleware('auth:sanctum');
-Route::post('/link/update',[LinkController::class, 'updateLink'])->middleware('auth:sanctum');
-Route::post('/link/delete',[LinkController::class, 'deleteLink'])->middleware('auth:sanctum');
-Route::post('/link/getUserLinks',[LinkController::class, 'getUserLinks'])->middleware('auth:sanctum');
-Route::post('/link/getOriginalLink',[LinkController::class, 'getOriginalLink'])->middleware('auth:sanctum');
+Route::put('/link/update',[LinkController::class, 'updateLink'])->middleware('auth:sanctum');
+Route::delete('/link/delete',[LinkController::class, 'deleteLink'])->middleware('auth:sanctum');
+Route::get('/link/getUserLinks',[LinkController::class, 'getUserLinks'])->middleware('auth:sanctum');
+Route::get('/link/getOriginalLink',[LinkController::class, 'getOriginalLink'])->middleware('auth:sanctum');
 
