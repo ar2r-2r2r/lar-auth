@@ -16,5 +16,4 @@ interface LinkRepositoryInterface
     public function getByShortCode(string $shortCode);                          //returns link by its short code
     public function getAll():Collection;                                                  // returns all links
     public function getAllByUser(string|int $userId):Collection;                       // returns all user-specific links
-
 }

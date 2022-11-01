@@ -26,6 +26,7 @@ class LinkRepository implements LinkRepositoryInterface
 
     public function update(int|string $linkId, string $shortCode, LinkDetails $linkDetails)
     {
+
         return LinkModel::where('id', $linkId)->update(['shortCode'=>$shortCode]);
     }
 
@@ -59,7 +60,14 @@ class LinkRepository implements LinkRepositoryInterface
 
     public function getAllByUser(int|string $userId):Collection
     {
-        return LinkModel::where('userId', $userId)->get(['shortCode','originalUrl']);
+        $currentUserId=auth()->user()->id;
+        if($currentUserId==$userId){
+            return LinkModel::where('userId', $userId)->where('userId', $currentUserId)->get(['shortCode','originalUrl']);
+        }
+        else{
+            return LinkModel::where('userId', $userId)->where('isPublic', 1)->get(['shortCode','originalUrl']);
+        }
+
 
     }
 }
