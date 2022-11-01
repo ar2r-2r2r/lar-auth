@@ -10,14 +10,11 @@ use App\Http\Requests\UpdateDelLinkRequest;
 use App\Interfaces\LinkRepositoryInterface;
 use App\Interfaces\LinkServiceInterface;
 use App\Models\LinkDetails;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Arr;
 
 class LinkService implements LinkServiceInterface
 {
     private LinkRepositoryInterface $linkRepository;
-    protected LinkDetails $linkDetails;
+    private LinkDetails $linkDetails;
 
     public function __construct(LinkRepositoryInterface $linkRepository, LinkDetails $linkDetails)
     {
@@ -63,6 +60,5 @@ class LinkService implements LinkServiceInterface
         $originalUrl=$this->linkRepository->getByShortCode($shortCode);
         return $originalUrl;
     }
-
 
 }

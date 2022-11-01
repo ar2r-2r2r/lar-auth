@@ -6,15 +6,9 @@ use App\Interfaces\LinkRepositoryInterface;
 use App\Models\LinkDetails;
 use App\Models\LinkModel;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\DB;
-use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
-use Termwind\Components\Li;
-
 
 class LinkRepository implements LinkRepositoryInterface
 {
-
-
     public function create(int|string $userId, string $shortCode, LinkDetails $linkDetails)
     {
         return LinkModel::create([
@@ -73,7 +67,6 @@ class LinkRepository implements LinkRepositoryInterface
         else{
             return LinkModel::where('userId', $userId)->where('isPublic', 1)->get(['shortCode','originalUrl']);
         }
-
-
     }
+
 }
