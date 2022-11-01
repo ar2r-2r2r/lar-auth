@@ -27,4 +27,5 @@ class GetOriginalLinkRequest extends FormRequest
             'shortCode' => 'required'
         ];
     }
+
 }

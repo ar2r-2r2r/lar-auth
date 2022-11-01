@@ -28,4 +28,11 @@ class CreateLinkRequest extends FormRequest
             'isPublic'=>'required',
         ];
     }
+    public function messages()
+    {
+        return[
+            'originalUrl.required'=>'A originalUrl is required',
+            'isPublic'=>'A isPublic  is required',
+        ];
+    }
 }
