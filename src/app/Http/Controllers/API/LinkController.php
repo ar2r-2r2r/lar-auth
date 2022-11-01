@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateLinkRequest;
 use App\Interfaces\LinkServiceInterface;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class LinkController extends Controller
     {
         $this->linkService=$linkService;
     }
-    public function createLink(Request $request)
+    public function createLink(CreateLinkRequest $request)
     {
         return $this->linkService->createLink($request);
     }

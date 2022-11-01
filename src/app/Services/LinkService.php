@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Helper\Util;
+use App\Http\Requests\CreateLinkRequest;
 use App\Interfaces\LinkRepositoryInterface;
 use App\Interfaces\LinkServiceInterface;
 use App\Models\LinkDetails;
@@ -20,21 +21,9 @@ class LinkService implements LinkServiceInterface
         $this->linkRepository=$linkRepository;
         $this->linkDetails=$linkDetails;
     }
-    public function createLink(Request $request)
+    public function createLink(CreateLinkRequest $request)
     {
-        try {
-            $validateUser = Validator::make($request->all(),
-                [
-                    'originalUrl' => 'required',
-                    'isPublic'=>'required'
-                ]);
-        } catch (\Throwable $th) {
-            return $response=[
-                'status'=>false,
-                'message'=>$th->getMessage(),
-                'statusCode'=>500,
-            ];
-        }
+        $validated=$request->validated();
         $this->linkDetails->setOriginalUrl($request->originalUrl);
         $this->linkDetails->setIsPublic($request->isPublic);
         $id=auth()->user()->id;
