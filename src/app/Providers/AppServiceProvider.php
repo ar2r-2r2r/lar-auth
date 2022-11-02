@@ -5,8 +5,6 @@ namespace App\Providers;
 use App\Interfaces\AuthServiceInterface;
 use App\Interfaces\LinkServiceInterface;
 use App\Interfaces\UserServiceInterface;
-use App\Interfaces\AuthRepositoryInterface;
-use App\Models\LinkDetails;
 use App\Models\LinkModel;
 use App\Services\LinkService;
 use App\Services\UserService;

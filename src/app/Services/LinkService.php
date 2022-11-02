@@ -4,10 +4,6 @@ namespace App\Services;
 
 use App\Exceptions\OriginalLinkAlreadyExistsException;
 use App\Helper\Util;
-use App\Http\Requests\CreateLinkRequest;
-use App\Http\Requests\GetOriginalLinkRequest;
-use App\Http\Requests\GetUserLinksRequest;
-use App\Http\Requests\UpdateDelLinkRequest;
 use App\Interfaces\LinkRepositoryInterface;
 use App\Interfaces\LinkServiceInterface;
 use App\Models\LinkDetails;

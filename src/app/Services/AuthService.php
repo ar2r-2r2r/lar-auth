@@ -3,11 +3,9 @@ namespace App\Services;
 
 use App\Interfaces\AuthRepositoryInterface;
 use App\Interfaces\AuthServiceInterface;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
+
 
 class AuthService implements AuthServiceInterface {
 

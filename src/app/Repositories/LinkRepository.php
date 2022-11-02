@@ -6,7 +6,7 @@ use App\Interfaces\LinkRepositoryInterface;
 use App\Models\LinkDetails;
 use App\Models\LinkModel;
 use Illuminate\Database\Eloquent\Collection;
-use League\CommonMark\Extension\CommonMark\Node\Inline\Link;
+
 
 class LinkRepository implements LinkRepositoryInterface
 {
