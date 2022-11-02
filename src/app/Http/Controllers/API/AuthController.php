@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginUserRequest;
+use App\Http\Requests\RegisterUserRequest;
 use App\Interfaces\AuthServiceInterface;
 use App\Models\User;
 use App\Services\AuthService;
@@ -20,24 +22,23 @@ class AuthController extends Controller
         $this->authService=$authService;
     }
 
-    public function createUser(Request $request){
+    public function createUser(RegisterUserRequest $request){
+        $request->validated();
         $response=$this->authService->register($request);
-        $statusCode=array_pop($response);
-        return response()->json($response,$statusCode);
+        return response()->json($response);
     }
 
-    public function loginUser(Request $request)
+    public function loginUser(LoginUserRequest $request)
     {
+        $request->validated();
         $response=$this->authService->login($request);
-        $statusCode=array_pop($response);
-        return response()->json($response,$statusCode);
+        return response()->json($response);
     }
 
     public function logout(Request $request)
     {
         $response=$this->authService->logout($request);
-        $statusCode=array_pop($response);
-        return response()->json($response,$statusCode);
+        return response()->json($response);
     }
 
 

@@ -19,85 +19,24 @@ class AuthService implements AuthServiceInterface {
     }
     public function register(Request $request):array
     {
-
-        try {
-                $validateUser=Validator::make($request->all(),
-            [
-                'name'=>'required',
-                'email'=>'required|email|unique:users,email',
-                'password'=>'required'
-            ]);
-
-            if($validateUser->fails()){
-                return $response=[
-                    'status'=>'false',
-                    'message'=>'validation error',
-                    'errors'=>$validateUser->errors(),
-                    'statusCode'=>401,
-                    ];
-            }
-
-            $user=$this->authRepository->create($request);
-
-            return $response=[
-                'status'=>true,
-                'message'=>'User created successfully',
-                'token'=>$user->createToken("API TOKEN")->plainTextToken,
-                'statusCode'=>200,
-            ];
-        } catch (\Throwable $th) {
-            return $response=[
-                'status'=>false,
-                'message'=>$th->getMessage(),
-                'statusCode'=>500,
-            ];
-        }
+        $user=$this->authRepository->create($request);
     }
 
     public function login(Request $request)
     {
-        try {
-            $validateUser = Validator::make($request->all(),
-            [
-                'email' => 'required|email',
-                'password' => 'required'
-            ]);
-
-            if($validateUser->fails()){
-                return $response=[
-                    'status' => false,
-                    'message' => 'validation error',
-                    'errors' => $validateUser->errors(),
-                    'statusCode'=>401,
-                ];
-            }
-
-            if(!Auth::attempt($request->only(['email', 'password']))){
-
-                return $response=[
-                    'status' => false,
-                    'message' => 'Email & Password does not match with our record.',
-                    'statusCode'=>401,
-                ];
-            }
-
-//            $user = User::where('email', $request->email)->first();
-            $user=$this->authRepository->set($request);
-
-            return $response=[
-                'status' => true,
-                'message' => 'User Logged In Successfully',
-                'token' => $user->createToken("API TOKEN")->plainTextToken,
-                'statusCode'=>200,
-            ];
-
-        } catch (\Throwable $th) {
+        if(!Auth::attempt($request->only(['email', 'password']))){
             return $response=[
                 'status' => false,
-                'message' => $th->getMessage(),
-                'statusCode'=>500,
+                'message' => 'Email & Password does not match with our record.'
             ];
         }
+        $user=$this->authRepository->set($request);
+        return $response=[
+            'status' => true,
+            'message' => 'User Logged In Successfully',
+            'token' => $user->createToken("API TOKEN")->plainTextToken
+        ];
+
     }
 
     public function logout(Request $request)
@@ -107,8 +46,7 @@ class AuthService implements AuthServiceInterface {
         $request->session()->regenerateToken();
         return $response=[
             'status'=>true,
-            'message'=>'User logout successfully',
-            'statusCode'=>200,
+            'message'=>'User logout successfully'
         ];
     }
 }
