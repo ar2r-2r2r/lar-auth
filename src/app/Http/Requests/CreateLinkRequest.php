@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 use App\Models\LinkDetails;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
 class CreateLinkRequest extends FormRequest
 {
@@ -21,6 +22,10 @@ class CreateLinkRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
+    public function set(CreateLinkRequest $request, LinkDetails $linkDetails){
+        $linkDetails->setOriginalUrl($request->originalUrl);
+        $linkDetails->setIsPublic($request->isPublic);
+    }
     public function rules()
     {
         return [

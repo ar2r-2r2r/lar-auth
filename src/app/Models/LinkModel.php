@@ -49,7 +49,7 @@ class LinkModel extends Model
     /**
      * @param int $userId
      */
-    public function setUserId(int $userId): void
+    public function setUserId(string|int $userId): void
     {
         $this->userId = $userId;
     }

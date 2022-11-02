@@ -10,54 +10,53 @@ use App\Http\Requests\UpdateDelLinkRequest;
 use App\Interfaces\LinkRepositoryInterface;
 use App\Interfaces\LinkServiceInterface;
 use App\Models\LinkDetails;
+use App\Models\LinkModel;
 
 class LinkService implements LinkServiceInterface
 {
     private LinkRepositoryInterface $linkRepository;
-    private LinkDetails $linkDetails;
+    private LinkModel $linkModel;
 
-    public function __construct(LinkRepositoryInterface $linkRepository, LinkDetails $linkDetails)
+    public function __construct(LinkRepositoryInterface $linkRepository, LinkModel $linkModel)
     {
         $this->linkRepository=$linkRepository;
-        $this->linkDetails=$linkDetails;
+        $this->linkModel=$linkModel;
     }
-    public function createLink(CreateLinkRequest $request)
+    public function createLink(LinkDetails $linkDetails)
     {
-        $request->validated();
-        $this->linkDetails->setOriginalUrl($request->originalUrl);
-        $this->linkDetails->setIsPublic($request->isPublic);
-        $id=auth()->user()->id;
-        $shortLink=Util::generateShortLink();
-        $result=$this->linkRepository->create($id,$shortLink,$this->linkDetails);
+        $this->linkModel->setUserId(auth()->user()->id);
+        $this->linkModel->setShortCode(Util::generateShortLink());
+        $result=$this->linkRepository->create($this->linkModel->getUserId(),$this->linkModel->getShortCode(), $linkDetails);
         return $result;
     }
-    public function updateLink(UpdateDelLinkRequest $request)
+    public function updateLink($linkId,$shortLink)
     {
-        $request->validated();
-        $linkId=$request->linkId;
-        $shortLink=Util::generateShortLink();
-        $result=$this->linkRepository->update($linkId,$shortLink,$this->linkDetails);
+        $this->linkModel->setId($linkId);
+        $this->linkModel->setUserId(auth()->user()->id);
+        $this->linkModel->setShortCode(Util::generateShortLink());
+        $result=$this->linkRepository->update($this->linkModel->getUserId(),$this->linkModel->getId(),$shortLink);
         return $result;
     }
 
-    public function deleteLink(UpdateDelLinkRequest $request)
+    public function deleteLink($linkId)
     {
-        $request->validated();
-        $this->linkRepository->delete($request->linkId);
+        $this->linkModel->setUserId(auth()->user()->id);
+        $this->linkModel->setId($linkId);
+        $this->linkRepository->delete($this->linkModel->getUserId(), $this->linkModel->getId());
     }
 
-    public function getUserLinks(GetUserLinksRequest $request)
+    public function getUserLinks($userId)
     {
-        $request->validated();
-        $userLinks=$this->linkRepository->getAllByUser($request->userId);
+        $this->linkModel->setUserId($userId);
+        $currentUser=auth()->user()->id;
+        $userLinks=$this->linkRepository->getAllByUser($this->linkModel->getUserId(), $currentUser);
         return $userLinks;
     }
 
-    public function getOriginalLink(GetOriginalLinkRequest $request)
+    public function getOriginalLink(string $shortCode)
     {
-        $request->validated();
-        $shortCode=$request->shortCode;
-        $originalUrl=$this->linkRepository->getByShortCode($shortCode);
+        $this->linkModel->setShortCode($shortCode);
+        $originalUrl=$this->linkRepository->getByShortCode($this->linkModel->getShortCode());
         return $originalUrl;
     }
 

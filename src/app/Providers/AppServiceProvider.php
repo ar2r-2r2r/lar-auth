@@ -7,6 +7,7 @@ use App\Interfaces\LinkServiceInterface;
 use App\Interfaces\UserServiceInterface;
 use App\Interfaces\AuthRepositoryInterface;
 use App\Models\LinkDetails;
+use App\Models\LinkModel;
 use App\Services\LinkService;
 use App\Services\UserService;
 use App\Repositories\UserRepository;
@@ -31,7 +32,7 @@ class AppServiceProvider extends ServiceProvider
             return new UserService(new UserRepository());
         });
         $this->app->bind(LinkServiceInterface::class, function () {
-            return new LinkService(new LinkRepository(), new LinkDetails());
+            return new LinkService(new LinkRepository(), new LinkModel());
         });
 
 
