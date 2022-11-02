@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\OriginalLinkAlreadyExistsException;
 use App\Helper\Util;
 use App\Http\Requests\CreateLinkRequest;
 use App\Http\Requests\GetOriginalLinkRequest;
@@ -24,6 +25,10 @@ class LinkService implements LinkServiceInterface
     }
     public function createLink(LinkDetails $linkDetails)
     {
+        $link=$this->linkRepository->check($linkDetails->getOriginalUrl());
+        if($link==$linkDetails->getOriginalUrl()){
+           throw new OriginalLinkAlreadyExistsException('already exists');
+        }
         $this->linkModel->setUserId(auth()->user()->id);
         $this->linkModel->setShortCode(Util::generateShortLink());
         $result=$this->linkRepository->create($this->linkModel->getUserId(),$this->linkModel->getShortCode(), $linkDetails);

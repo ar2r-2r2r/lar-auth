@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Exceptions\OriginalLinkAlreadyExistsException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateLinkRequest;
 use App\Http\Requests\GetOriginalLinkRequest;
@@ -26,7 +27,13 @@ class LinkController extends Controller
     {
         $request->validated();
         $request->set($request, $this->linkDetails);
-        return $this->linkService->createLink($this->linkDetails);
+        $result=$this->linkService->createLink($this->linkDetails);
+        try {
+            $this->linkService->createLink($this->linkDetails);
+        }catch (OriginalLinkAlreadyExistsException $exception){
+            return $exception->getMessage();
+        }
+        return $result;
     }
     public function updateLink(UpdateDelLinkRequest $request)
     {

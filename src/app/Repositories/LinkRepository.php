@@ -12,6 +12,7 @@ class LinkRepository implements LinkRepositoryInterface
 {
     public function create(string|int $userId,string $shortCode, LinkDetails $linkDetails):LinkModel
     {
+
         return LinkModel::create([
             'userId'=>$userId,
             'originalUrl'=>$linkDetails->getOriginalUrl(),
@@ -66,6 +67,10 @@ class LinkRepository implements LinkRepositoryInterface
         else{
             return LinkModel::where('userId', $userId)->where('isPublic', 1)->get(['shortCode','originalUrl']);
         }
+    }
+    public function check(string $originalUrl):Collection
+    {
+        return $link=LinkModel::where('originalUrl', $originalUrl)->get('originalUrl');
     }
 
 }
