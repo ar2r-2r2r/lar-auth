@@ -15,9 +15,9 @@ class AuthService implements AuthServiceInterface {
     {
         $this->authRepository=$authRepository;
     }
-    public function register(Request $request):array
+    public function register(Request $request)
     {
-        $user=$this->authRepository->create($request);
+        return $user=$this->authRepository->create($request);
     }
 
     public function login(Request $request)

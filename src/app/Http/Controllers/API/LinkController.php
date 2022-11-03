@@ -38,7 +38,7 @@ class LinkController extends Controller
     public function updateLink(UpdateDelLinkRequest $request)
     {
         $request->validated();
-        return $this->linkService->updateLink($request->id,$request->shortLink);
+        return $this->linkService->updateLink($request->linkId);
     }
     public function deleteLink(UpdateDelLinkRequest $request)
     {

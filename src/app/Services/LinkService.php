@@ -30,12 +30,12 @@ class LinkService implements LinkServiceInterface
         $result=$this->linkRepository->create($this->linkModel->getUserId(),$this->linkModel->getShortCode(), $linkDetails);
         return $result;
     }
-    public function updateLink($linkId,$shortLink)
+    public function updateLink($linkId)
     {
         $this->linkModel->setId($linkId);
         $this->linkModel->setUserId(auth()->user()->id);
         $this->linkModel->setShortCode(Util::generateShortLink());
-        $result=$this->linkRepository->update($this->linkModel->getUserId(),$this->linkModel->getId(),$shortLink);
+        $result=$this->linkRepository->update($this->linkModel->getUserId(),$this->linkModel->getId(),$this->linkModel->getShortCode());
         return $result;
     }
 
