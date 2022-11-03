@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Events\CreateLinkSuccessful;
 use App\Exceptions\OriginalLinkAlreadyExistsException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateLinkRequest;
@@ -33,6 +34,7 @@ class LinkController extends Controller
         }catch (OriginalLinkAlreadyExistsException $exception){
             return $exception->getMessage();
         }
+        CreateLinkSuccessful::dispatch($result);
         return $result;
     }
     public function updateLink(UpdateDelLinkRequest $request)
