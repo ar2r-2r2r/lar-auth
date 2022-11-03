@@ -23,13 +23,6 @@ class CreateEmail extends Mailable
         //
     }
 
-    public function build()
-    {
-//        return $this->from('LinkService@example.com', 'Link Service')
-//            ->markdown('mail.create-confirmation');
-        return $this->from('LinkService@example.com', 'Link Service');
-    }
-
     /**
      * Get the message envelope.
      *
@@ -38,7 +31,7 @@ class CreateEmail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Create Email',
+            subject: 'Create Link Successfully',
         );
     }
 
@@ -50,7 +43,7 @@ class CreateEmail extends Mailable
     public function content()
     {
         return new Content(
-            view: 'mail.create-confirmation',
+            markdown: 'create-confirmation',
         );
     }
 
