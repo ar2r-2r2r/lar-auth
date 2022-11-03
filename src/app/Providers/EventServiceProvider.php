@@ -3,7 +3,11 @@
 namespace App\Providers;
 
 use App\Events\CreateLinkSuccessful;
+use App\Events\DelLinkSuccessful;
+use App\Events\UpdateLinkSuccessful;
 use App\Listeners\SendCreateConfirmationEmail;
+use App\Listeners\SendDelConfirmationEmail;
+use App\Listeners\SendUpdateConfirmationEmail;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -22,6 +26,12 @@ class EventServiceProvider extends ServiceProvider
         ],
         CreateLinkSuccessful::class=>[
             SendCreateConfirmationEmail::class,
+        ],
+        UpdateLinkSuccessful::class=>[
+            SendUpdateConfirmationEmail::class,
+        ],
+        DelLinkSuccessful::class=>[
+            SendDelConfirmationEmail::class,
         ],
     ];
 

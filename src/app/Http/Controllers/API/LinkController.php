@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Events\CreateLinkSuccessful;
+use App\Events\DelLinkSuccessful;
+use App\Events\UpdateLinkSuccessful;
 use App\Exceptions\OriginalLinkAlreadyExistsException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateLinkRequest;
@@ -40,12 +42,16 @@ class LinkController extends Controller
     public function updateLink(UpdateDelLinkRequest $request)
     {
         $request->validated();
-        return $this->linkService->updateLink($request->linkId);
+        $result=$this->linkService->updateLink($request->linkId);
+        UpdateLinkSuccessful::dispatch();
+        return $result;
     }
     public function deleteLink(UpdateDelLinkRequest $request)
     {
         $request->validated();
-        return $this->linkService->deleteLink($request->id);
+        $result=$this->linkService->deleteLink($request->id);
+        DelLinkSuccessful::dispatch();
+        return $result;
     }
     public function getUserLinks(GetUserLinksRequest $request)
     {
