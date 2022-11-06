@@ -8,7 +8,6 @@ use App\Http\Requests\GetUserLinksRequest;
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\RegisterUserRequest;
 use App\Http\Requests\UpdateDelLinkRequest;
-use Illuminate\Auth\Events\Login;
 use PHPUnit\Framework\TestCase;
 
 class ValidationTest extends TestCase
