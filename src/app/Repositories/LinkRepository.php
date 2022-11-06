@@ -21,10 +21,10 @@ class LinkRepository implements LinkRepositoryInterface
         ]);
     }
 
-    public function update(string|int $userId, int|string $linkId, string $shortCode):Collection
+    public function update(string|int $userId, int|string $linkId, string $shortCode):LinkModel
     {
         LinkModel::where('userId', $userId)->where('id', $linkId)->update(['shortCode'=>$shortCode]);
-        return LinkModel::where('shortCode',$shortCode)->get('shortCode');
+        return LinkModel::where('shortCode',$shortCode)->getModel();
     }
 
     public function delete(string|int $userId, int|string $linkId):void
@@ -32,14 +32,14 @@ class LinkRepository implements LinkRepositoryInterface
         LinkModel::where('userId', $userId)->where('id', $linkId)->delete();
     }
 
-    public function getById(int|string $linkId):Collection
+    public function getById(int|string $linkId):LinkModel
     {
-        return LinkModel::where('id', $linkId)->get('shortCode');
+        return LinkModel::where('id', $linkId)->getModel();
     }
 
-    public function getByShortCode(string $shortCode):Collection
+    public function getByShortCode(string $shortCode):LinkModel
     {
-        return LinkModel::where('shortCode',$shortCode)->get(['originalUrl']);
+        return LinkModel::where('shortCode',$shortCode)->getModel();
 
     }
 
@@ -54,7 +54,7 @@ class LinkRepository implements LinkRepositoryInterface
     public function getAllByUser(int|string $userId, int|string $currentUserId):Collection
     {
         if($currentUserId==$userId){
-            return LinkModel::where('userId', $userId)->where('userId', $currentUserId)->get(['shortCode','originalUrl']);
+            return LinkModel::where('userId', $userId)->get(['shortCode','originalUrl']);
         }
         else{
             return LinkModel::where('userId', $userId)->where('isPublic', 1)->get(['shortCode','originalUrl']);

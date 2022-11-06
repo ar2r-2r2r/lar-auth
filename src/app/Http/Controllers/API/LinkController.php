@@ -28,39 +28,58 @@ class LinkController extends Controller
     }
     public function createLink(CreateLinkRequest $request)
     {
-        $request->validated();
-        $request->set($request, $this->linkDetails);
-        $result=$this->linkService->createLink($this->linkDetails);
         try {
-            $this->linkService->createLink($this->linkDetails);
+            $request->validated();
+            $request->set($request, $this->linkDetails);
+            $result = $this->linkService->createLink($this->linkDetails);
+            CreateLinkSuccessful::dispatch(auth()->user()->email);
+            return $result;
         }catch (OriginalLinkAlreadyExistsException $exception){
             return $exception->getMessage();
         }
-        CreateLinkSuccessful::dispatch($result);
-        return $result;
+
     }
     public function updateLink(UpdateDelLinkRequest $request)
     {
-        $request->validated();
-        $result=$this->linkService->updateLink($request->linkId);
-        UpdateLinkSuccessful::dispatch();
-        return $result;
+        try{
+            $request->validated();
+            $result=$this->linkService->updateLink($request->linkId);
+            UpdateLinkSuccessful::dispatch(auth()->user()->email);
+            return $result;
+        }catch (OriginalLinkAlreadyExistsException $exception){
+            return $exception->getMessage();
+        }
+
     }
     public function deleteLink(UpdateDelLinkRequest $request)
     {
-        $request->validated();
-        $result=$this->linkService->deleteLink($request->id);
-        DelLinkSuccessful::dispatch();
-        return $result;
+        try{
+            $request->validated();
+            $result=$this->linkService->deleteLink($request->id);
+            DelLinkSuccessful::dispatch(auth()->user()->email);
+            return $result;
+        }catch (OriginalLinkAlreadyExistsException $exception){
+            return $exception->getMessage();
+        }
+
     }
     public function getUserLinks(GetUserLinksRequest $request)
     {
-        $request->validated();
-        return $this->linkService->getUserLinks($request->userId);
+        try{
+            $request->validated();
+            return $this->linkService->getUserLinks($request->userId);
+        }catch (OriginalLinkAlreadyExistsException $exception){
+            return $exception->getMessage();
+        }
     }
     public function getOriginalLink(GetOriginalLinkRequest $request)
     {
-        $request->validated();
-        return $this->linkService->getOriginalLink($request->shortCode);
+        try{
+            $request->validated();
+            return $this->linkService->getOriginalLink($request->shortCode);
+        }catch (OriginalLinkAlreadyExistsException $exception){
+            return $exception->getMessage();
+        }
+
     }
 }

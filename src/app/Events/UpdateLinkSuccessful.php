@@ -15,10 +15,10 @@ class UpdateLinkSuccessful
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-
-    public function __construct()
+    public string $email;
+    public function __construct($email)
     {
-
+        $this->email=$email;
     }
 
     /**

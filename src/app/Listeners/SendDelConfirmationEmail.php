@@ -27,7 +27,7 @@ class SendDelConfirmationEmail implements ShouldQueue
      */
     public function handle($event)
     {
-        Mail::to(auth()->user()->email)->send(new DelEmail());                  //send to user mail
+        Mail::to($event->email)->send(new DelEmail());                  //send to user mail
         Mail::to("hello@example.com")->send(new DelEmail());              //send to admin mail
     }
 }

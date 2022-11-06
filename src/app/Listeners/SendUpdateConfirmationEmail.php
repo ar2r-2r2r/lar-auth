@@ -18,7 +18,7 @@ class SendUpdateConfirmationEmail implements ShouldQueue
      */
     public function __construct()
     {
-        //
+
     }
 
     /**
@@ -29,7 +29,7 @@ class SendUpdateConfirmationEmail implements ShouldQueue
      */
     public function handle($event)
     {
-        Mail::to(auth()->user()->email)->send(new UpdateEmail());               //send to user mail
+        Mail::to($event->email)->send(new UpdateEmail());               //send to user mail
         Mail::to("hello@example.com")->send(new UpdateEmail());           //send to admin mail
     }
 }

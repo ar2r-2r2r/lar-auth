@@ -27,8 +27,7 @@ class SendCreateConfirmationEmail implements ShouldQueue
      */
     public function handle($event)
     {
-        $linkModel=$event->linkModel;
-        Mail::to(auth()->user()->email)->send(new CreateEmail($linkModel));             //send to user email
-        Mail::to("hello@example.com")->send(new CreateEmail($linkModel));         //send to admin email
+        Mail::to($event->email)->send(new CreateEmail());             //send to user email
+        Mail::to("hello@example.com")->send(new CreateEmail());         //send to admin email
     }
 }
