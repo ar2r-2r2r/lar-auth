@@ -3,7 +3,8 @@
 namespace Tests\Unit;
 
 use App\Helper\Util;
-use PHPUnit\Framework\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class GenerateShortLinkTest extends TestCase
 {
@@ -12,9 +13,15 @@ class GenerateShortLinkTest extends TestCase
      *
      * @return void
      */
-    public function test_generation_short_link()
+
+    use RefreshDatabase;
+
+
+    public function test_find_modelLink_by_Id()
     {
         $shortLink=Util::generateShortLink();
         $this->assertMatchesRegularExpression("/.{6}/", $shortLink);        //check for only 6 symbols
     }
+
+
 }
