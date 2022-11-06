@@ -55,7 +55,7 @@ class LinkController extends Controller
     {
         try{
             $request->validated();
-            $result=$this->linkService->deleteLink($request->id);
+            $result=$this->linkService->deleteLink($request->linkId);
             DelLinkSuccessful::dispatch(auth()->user()->email);
             return $result;
         }catch (\Exception $exception){
