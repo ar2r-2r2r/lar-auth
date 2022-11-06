@@ -51,32 +51,4 @@ class UserControllerTest extends TestCase
 
 
 
-    public function test_unAthorizedUserCreateLinks()
-    {
-        $link=[
-            'userId'=>"1",
-            'originalUrl'=>"originalUrl.com",
-            'shortCode'=>"qwerty",
-            'isPublic'=>"1"
-        ];
-        $this->json('post', 'api/link/create', $link)->assertStatus(401);
-    }
-
-    public function test_unAthorizedUserUpdateLinks()
-    {
-        $linkDetails=[
-            'linkId'=>"1"
-        ];
-        $this->json('put', 'api/link/update', $linkDetails)->assertStatus(401);
-    }
-
-    public function test_unAthorizedUserDelLinks()
-    {
-        $link=[
-            'userId'=>"1",
-            'linkId'=>"1",
-        ];
-        $this->json('delete', 'api/link/delete', $link)->assertStatus(401);
-    }
-
 }
