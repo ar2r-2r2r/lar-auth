@@ -21,7 +21,8 @@ class AuthController extends Controller
     public function createUser(RegisterUserRequest $request){
         $request->validated();
         $response=$this->authService->register($request);
-        return response()->json($response);
+        $statusCode=array_pop($response);
+        return response()->json($response,$statusCode);
     }
 
     public function loginUser(LoginUserRequest $request)

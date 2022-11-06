@@ -58,7 +58,7 @@ class LinkController extends Controller
             $result=$this->linkService->deleteLink($request->id);
             DelLinkSuccessful::dispatch(auth()->user()->email);
             return $result;
-        }catch (OriginalLinkAlreadyExistsException $exception){
+        }catch (\Exception $exception){
             return $exception->getMessage();
         }
 
@@ -68,7 +68,7 @@ class LinkController extends Controller
         try{
             $request->validated();
             return $this->linkService->getUserLinks($request->userId);
-        }catch (OriginalLinkAlreadyExistsException $exception){
+        }catch (\Exception $exception){
             return $exception->getMessage();
         }
     }
@@ -77,7 +77,7 @@ class LinkController extends Controller
         try{
             $request->validated();
             return $this->linkService->getOriginalLink($request->shortCode);
-        }catch (OriginalLinkAlreadyExistsException $exception){
+        }catch (\Exception $exception){
             return $exception->getMessage();
         }
 

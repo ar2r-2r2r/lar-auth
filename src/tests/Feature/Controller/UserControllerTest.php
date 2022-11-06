@@ -22,7 +22,7 @@ class UserControllerTest extends TestCase
             'password'  => "artur",
         ];
 
-        $this->json('post', 'api/auth/createUser', $user)->assertStatus(Response::HTTP_OK);
+        $this->json('post', 'api/auth/createUser', $user)->assertStatus(Response::HTTP_CREATED);
     }
 
     public function test_loginUser()
