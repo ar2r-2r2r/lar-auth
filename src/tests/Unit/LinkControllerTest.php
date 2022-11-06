@@ -2,10 +2,6 @@
 
 namespace Tests\Unit;
 
-use App\Interfaces\LinkRepositoryInterface;
-use App\Models\LinkModel;
-use App\Repositories\LinkRepository;
-use App\Services\LinkService;
 use Illuminate\Http\Response;
 use Tests\TestCase;
 

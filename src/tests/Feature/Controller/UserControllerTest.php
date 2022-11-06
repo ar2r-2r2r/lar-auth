@@ -2,10 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\Http\Controllers\API\LinkController;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Route;
 use Tests\TestCase;
 
 
