@@ -22,12 +22,18 @@ class LinkService implements LinkServiceInterface
     public function createLink(LinkDetails $linkDetails)
     {
         $link=$this->linkRepository->check($linkDetails->getOriginalUrl());
-        if($link==$linkDetails->getOriginalUrl()){
-           throw new OriginalLinkAlreadyExistsException('already exists');
+        try{
+            if($link==$linkDetails->getOriginalUrl()){
+                throw new OriginalLinkAlreadyExistsException('already exists');
+            }
+            $this->linkModel->setUserId(auth()->user()->id);
+            $this->linkModel->setShortCode(Util::generateShortLink());
+            $result=$this->linkRepository->create($this->linkModel->getUserId(),$this->linkModel->getShortCode(), $linkDetails);
+        }catch (OriginalLinkAlreadyExistsException $e){
+            $result=$e->errorMessage();
         }
-        $this->linkModel->setUserId(auth()->user()->id);
-        $this->linkModel->setShortCode(Util::generateShortLink());
-        $result=$this->linkRepository->create($this->linkModel->getUserId(),$this->linkModel->getShortCode(), $linkDetails);
+
+
         return $result;
     }
     public function updateLink($linkId)

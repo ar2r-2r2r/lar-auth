@@ -34,7 +34,7 @@ class LinkController extends Controller
             $result = $this->linkService->createLink($this->linkDetails);
             CreateLinkSuccessful::dispatch(auth()->user()->email);
             return $result;
-        }catch (OriginalLinkAlreadyExistsException $exception){
+        }catch (\Exception $exception){
             return $exception->getMessage();
         }
 
@@ -46,7 +46,7 @@ class LinkController extends Controller
             $result=$this->linkService->updateLink($request->linkId);
             UpdateLinkSuccessful::dispatch(auth()->user()->email);
             return $result;
-        }catch (OriginalLinkAlreadyExistsException $exception){
+        }catch (\Exception $exception){
             return $exception->getMessage();
         }
 
