@@ -8,6 +8,7 @@ use App\Interfaces\LinkRepositoryInterface;
 use App\Interfaces\LinkServiceInterface;
 use App\Models\LinkDetails;
 use App\Models\LinkModel;
+use Illuminate\Support\Facades\Cache;
 
 class LinkService implements LinkServiceInterface
 {
@@ -29,6 +30,7 @@ class LinkService implements LinkServiceInterface
             $this->linkModel->setUserId(auth()->user()->id);
             $this->linkModel->setShortCode(Util::generateShortLink());
             $result=$this->linkRepository->create($this->linkModel->getUserId(),$this->linkModel->getShortCode(), $linkDetails);
+            Cache::put('modelLink', '$result',300);
         }catch (OriginalLinkAlreadyExistsException $e){
             $result=$e->errorMessage();
         }
@@ -42,6 +44,7 @@ class LinkService implements LinkServiceInterface
         $this->linkModel->setUserId(auth()->user()->id);
         $this->linkModel->setShortCode(Util::generateShortLink());
         $result=$this->linkRepository->update($this->linkModel->getUserId(),$this->linkModel->getId(),$this->linkModel->getShortCode());
+        Cache::put('modelLink', '$result',300);
         return $result;
     }
 
