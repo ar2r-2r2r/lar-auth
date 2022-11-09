@@ -20,7 +20,7 @@ class AuthService implements AuthServiceInterface {
         try{
             $user=$this->authRepository->create($request);
             return $response=[
-                'message' => "exception",
+                'message' => "$user",
                 'response'=>'201',
             ];
         }catch (\Exception $exception){
