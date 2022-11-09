@@ -22,7 +22,7 @@ class AuthController extends Controller
         try{
             $request->validated();
             $user=$this->authService->register($request);
-            return response()->json($user, 201);
+            return response()->json('User created Successfully!', 201);
         }catch (\Exception $exception){
             return response()->json($exception, 500);
         }
@@ -44,8 +44,8 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         try {
-            $response=$this->authService->logout($request);
-            return response()->json($response,200);
+            $this->authService->logout($request);
+            return response()->json('User logout Successfully',200);
         }catch (\Exception $exception) {
             return response()->json($exception, 500);
         }
