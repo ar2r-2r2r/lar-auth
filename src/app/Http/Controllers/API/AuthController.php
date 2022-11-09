@@ -19,25 +19,37 @@ class AuthController extends Controller
     }
 
     public function createUser(RegisterUserRequest $request){
-        $request->validated();
-        $response=$this->authService->register($request);
-        $statusCode=array_pop($response);
-        return response()->json($response,$statusCode);
+        try{
+            $request->validated();
+            $user=$this->authService->register($request);
+            return response()->json($user, 201);
+        }catch (\Exception $exception){
+            return response()->json($exception, 500);
+        }
+
     }
 
     public function loginUser(LoginUserRequest $request)
     {
-        $request->validated();
-        $response=$this->authService->login($request);
-        return response()->json($response);
+        try{
+            $request->validated();
+            $response=$this->authService->login($request);
+            return response()->json($response,200);
+        }catch (\Exception $exception){
+            return response()->json($exception, 500);
+        }
+
     }
 
     public function logout(Request $request)
     {
-        $response=$this->authService->logout($request);
-        return response()->json($response);
+        try {
+            $response=$this->authService->logout($request);
+            return response()->json($response,200);
+        }catch (\Exception $exception) {
+            return response()->json($exception, 500);
+        }
+
     }
-
-
 
 }

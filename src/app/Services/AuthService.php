@@ -17,34 +17,16 @@ class AuthService implements AuthServiceInterface {
     }
     public function register(Request $request)
     {
-        try{
-            $user=$this->authRepository->create($request);
-            return $response=[
-                'message' => "$user",
-                'response'=>'201',
-            ];
-        }catch (\Exception $exception){
-            return $response=[
-                'message' => "$exception",
-                'response'=>'500',
-            ];
-        }
-
+        $user=$this->authRepository->create($request);
     }
 
     public function login(Request $request)
     {
         if(!Auth::attempt($request->only(['email', 'password']))){
-            return $response=[
-                'message' => 'Email & Password does not match with our record.',
-                'response'=>'201',
-            ];
+            return 'Email & Password does not match with our record';
         }
         $user=$this->authRepository->set($request);
-        return $response=[
-            'message' => 'User Logged In Successfully:'."$user",
-            'token' => $user->createToken("API TOKEN")->plainTextToken,
-        ];
+        return $user;
 
     }
 
@@ -53,9 +35,6 @@ class AuthService implements AuthServiceInterface {
         Auth::guard('web')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return $response=[
-            'status'=>true,
-            'message'=>'User logout successfully'
-        ];
+        return 'User logout successfully';
     }
 }
