@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Mail\DelEmail;
+use App\Services\NotificationService;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
@@ -27,7 +28,6 @@ class SendDelConfirmationEmail implements ShouldQueue
      */
     public function handle($event)
     {
-        Mail::to($event->email)->send(new DelEmail());                  //send to user mail
-        Mail::to("hello@example.com")->send(new DelEmail());              //send to admin mail
+        NotificationService::email($event,'del');
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Mail\UpdateEmail;
+use App\Services\NotificationService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -29,7 +30,6 @@ class SendUpdateConfirmationEmail implements ShouldQueue
      */
     public function handle($event)
     {
-        Mail::to($event->email)->send(new UpdateEmail());               //send to user mail
-        Mail::to("hello@example.com")->send(new UpdateEmail());           //send to admin mail
+        NotificationService::email($event,'update');
     }
 }
