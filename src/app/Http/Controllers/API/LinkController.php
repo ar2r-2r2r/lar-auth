@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API;
 use App\Events\CreateLinkSuccessful;
 use App\Events\DelLinkSuccessful;
 use App\Events\UpdateLinkSuccessful;
-use App\Exceptions\OriginalLinkAlreadyExistsException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateLinkRequest;
 use App\Http\Requests\GetOriginalLinkRequest;
@@ -13,7 +12,6 @@ use App\Http\Requests\GetUserLinksRequest;
 use App\Http\Requests\UpdateDelLinkRequest;
 use App\Interfaces\LinkServiceInterface;
 use App\Models\LinkDetails;
-use Illuminate\Http\Request;
 
 class LinkController extends Controller
 {
@@ -32,7 +30,7 @@ class LinkController extends Controller
             $request->validated();
             $request->set($request, $this->linkDetails);
             $result = $this->linkService->createLink($this->linkDetails);
-            CreateLinkSuccessful::dispatch(auth()->user()->email);
+            CreateLinkSuccessful::dispatch(auth()->user());
             return $result;
         }catch (\Exception $exception){
             return $exception->getMessage();
@@ -44,7 +42,7 @@ class LinkController extends Controller
         try{
             $request->validated();
             $result=$this->linkService->updateLink($request->linkId);
-            UpdateLinkSuccessful::dispatch(auth()->user()->email);
+            UpdateLinkSuccessful::dispatch(auth()->user());
             return $result;
         }catch (\Exception $exception){
             return $exception->getMessage();
@@ -56,7 +54,7 @@ class LinkController extends Controller
         try{
             $request->validated();
             $result=$this->linkService->deleteLink($request->linkId);
-            DelLinkSuccessful::dispatch(auth()->user()->email);
+            DelLinkSuccessful::dispatch(auth()->user());
             return $result;
         }catch (\Exception $exception){
             return $exception->getMessage();

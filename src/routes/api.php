@@ -5,6 +5,7 @@ use App\Http\Controllers\API\LinkController;
 use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Notifications\TelegramNotification;
 
 /*
 |--------------------------------------------------------------------------

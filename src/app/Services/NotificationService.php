@@ -2,10 +2,8 @@
 
 namespace App\Services;
 
-use App\Mail\CreateEmail;
-use App\Mail\DelEmail;
-use App\Mail\UpdateEmail;
-use Illuminate\Support\Facades\Mail;
+use App\Helper\MailHelper;
+use App\Helper\TgHelper;
 
 class NotificationService
 {
@@ -13,17 +11,10 @@ class NotificationService
     {
     }
     public static function email($event,$action){
-        switch ($action){
-            case 'create':
-                Mail::to($event->email)->send(new CreateEmail());             //send to user email
-                break;
-            case 'update':
-                Mail::to($event->email)->send(new UpdateEmail());             //send to user email
-                break;
-            case 'del':
-                Mail::to($event->email)->send(new DelEmail());             //send to user email
-                break;
-        }
+        MailHelper::sendMessage($event,$action);
+    }
 
+    public static function telegram($event,$action){
+        TgHelper::sendMessage($event,$action);
     }
 }

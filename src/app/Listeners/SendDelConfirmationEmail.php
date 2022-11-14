@@ -29,5 +29,6 @@ class SendDelConfirmationEmail implements ShouldQueue
     public function handle($event)
     {
         NotificationService::email($event,'del');
+        NotificationService::telegram($event,'del');
     }
 }

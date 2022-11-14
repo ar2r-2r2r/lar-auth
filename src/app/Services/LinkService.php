@@ -8,6 +8,7 @@ use App\Interfaces\LinkRepositoryInterface;
 use App\Interfaces\LinkServiceInterface;
 use App\Models\LinkDetails;
 use App\Models\LinkModel;
+use App\Notifications\TelegramNotification;
 use Illuminate\Support\Facades\Cache;
 
 class LinkService implements LinkServiceInterface

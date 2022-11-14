@@ -31,5 +31,6 @@ class SendUpdateConfirmationEmail implements ShouldQueue
     public function handle($event)
     {
         NotificationService::email($event,'update');
+        NotificationService::telegram($event,'update');
     }
 }

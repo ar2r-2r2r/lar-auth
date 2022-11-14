@@ -2,11 +2,8 @@
 
 namespace App\Listeners;
 
-use App\Mail\CreateEmail;
 use App\Services\NotificationService;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Support\Facades\Mail;
 
 class SendCreateConfirmationEmail implements ShouldQueue
 {
@@ -29,5 +26,6 @@ class SendCreateConfirmationEmail implements ShouldQueue
     public function handle($event)
     {
         NotificationService::email($event,'create');
+        NotificationService::telegram($event,'create');
     }
 }

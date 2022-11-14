@@ -20,10 +20,10 @@ class CreateLinkSuccessful
      *
      * @return void
      */
-    public string $email;
-    public function __construct($email)
+    public $user;
+    public function __construct($user)
     {
-        $this->email=$email;
+        $this->user=$user;
     }
 
 }

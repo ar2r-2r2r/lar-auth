@@ -15,10 +15,10 @@ class DelLinkSuccessful
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public string $email;
-    public function __construct($email)
+    public $user;
+    public function __construct($user)
     {
-        $this->email=$email;
+        $this->$user=$user;
     }
 
     /**
