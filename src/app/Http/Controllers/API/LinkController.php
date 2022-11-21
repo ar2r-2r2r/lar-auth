@@ -12,22 +12,25 @@ use App\Http\Requests\GetOriginalLinkRequest;
 use App\Http\Requests\GetUserLinksRequest;
 use App\Http\Requests\UpdateDelLinkRequest;
 use App\Interfaces\LinkServiceInterface;
+use App\Interfaces\UserServiceInterface;
 
 class LinkController extends Controller
 {
     private LinkServiceInterface $linkService;
+    private UserServiceInterface $userService;
 
-
-    public function __construct(LinkServiceInterface $linkService)
+    public function __construct(LinkServiceInterface $linkService, UserServiceInterface $userService)
     {
         $this->linkService=$linkService;
+        $this->userService=$userService;
     }
     public function createLink(CreateLinkRequest $request)
     {
         try {
             $request->validated();
             $linkDetails=$request->getLinkDetails($request);
-            $result = $this->linkService->createLink($linkDetails);
+            $currentUserId=$this->userService->getId();
+            $result = $this->linkService->createLink($linkDetails,$currentUserId);
             CreateLinkSuccessful::dispatch(auth()->user());
             return $result;
         }catch (\Exception $exception){
@@ -72,7 +75,8 @@ class LinkController extends Controller
     {
         try{
             $request->validated();
-            return $this->linkService->getOriginalLink($request->shortCode);
+            $currentUserId=$this->userService->getId();
+            return $this->linkService->getOriginalLink($request->shortCode,$currentUserId);
         }catch (\Exception $exception){
             return $exception->getMessage();
         }

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Interfaces;
 
@@ -14,7 +15,7 @@ interface LinkRepositoryInterface
     public function update(string|int $userId, string|int $linkId, string $shortCode):LinkModel;    //updates existing link
     public function delete(string|int $userId, string|int $linkId):void;                                    //deletes existing model
     public function getById(string|int $linkId):LinkModel;                              //returns link by its ID
-    public function getByShortCode(string $shortCode):LinkModel;                          //returns link by its short code
+    public function getByShortCode(string $shortCode, string $currentUserId):LinkModel;                          //returns link by its short code
     public function getAll():Collection;                                                  // returns all links
     public function getAllByUser(int|string $userId, int|string $currentUserId):Collection;                       // returns all user-specific links
     public function check(string $originalUrl):Collection;

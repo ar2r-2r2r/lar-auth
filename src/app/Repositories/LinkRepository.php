@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Repositories;
 
@@ -37,9 +38,9 @@ class LinkRepository implements LinkRepositoryInterface
         return LinkModel::where('id', $linkId)->getModel();
     }
 
-    public function getByShortCode(string $shortCode): LinkModel
+    public function getByShortCode(string $shortCode, string $currentUserId): LinkModel
     {
-        $currentUserId="9";
+
         return LinkModel::where('shortCode',$shortCode)
             ->where(function ($query) use ($currentUserId) {
                 $query->where('isPublic',1)

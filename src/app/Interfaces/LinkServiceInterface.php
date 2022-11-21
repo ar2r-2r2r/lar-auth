@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Interfaces;
 
@@ -11,9 +12,10 @@ use Illuminate\Http\Request;
 
 interface LinkServiceInterface
 {
-    public function createLink(LinkDetails $linkDetails);
+    public function createLink(LinkDetails $linkDetails, string $currentUserId);
     public function updateLink(int|string $linkId);
     public function deleteLink(int|string $linkId);
     public function getUserLinks(int|string $userId);
-    public function getOriginalLink(string $shortCode);
+    public function getOriginalLink(string $shortCode, string $currentUserId);
+
 }
