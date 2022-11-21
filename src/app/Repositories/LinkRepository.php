@@ -37,10 +37,17 @@ class LinkRepository implements LinkRepositoryInterface
         return LinkModel::where('id', $linkId)->getModel();
     }
 
-    public function getByShortCode(string $shortCode):LinkModel
+    public function getByShortCode(string $shortCode): LinkModel
     {
-        return LinkModel::where('shortCode',$shortCode)->getModel();
-
+        $currentUserId="9";
+        return LinkModel::where('shortCode',$shortCode)
+            ->where(function ($query) use ($currentUserId) {
+                $query->where('isPublic',1)
+                    ->orWhere([
+                        'isPublic' => 0,
+                        'userId' => $currentUserId,
+                    ]);
+    })->first();
     }
 
     public function getAll():Collection
