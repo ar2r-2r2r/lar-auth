@@ -12,10 +12,10 @@ use Illuminate\Http\Request;
 
 interface LinkServiceInterface
 {
-    public function createLink(LinkDetails $linkDetails, string $currentUserId);
+    public function createLink(LinkDetails $linkDetails, int|string $currentUserId);
     public function updateLink(int|string $linkId);
     public function deleteLink(int|string $linkId);
     public function getUserLinks(int|string $userId);
-    public function getOriginalLink(string $shortCode, string $currentUserId);
+    public function getOriginalLink(string $shortCode, int|string $currentUserId);
 
 }

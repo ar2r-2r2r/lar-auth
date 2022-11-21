@@ -23,7 +23,7 @@ class LinkService implements LinkServiceInterface
         $this->linkModel=$linkModel;
     }
 
-    public function createLink(LinkDetails $linkDetails, string $currentUserId): LinkModel|string
+    public function createLink(LinkDetails $linkDetails, string|int $currentUserId): LinkModel|string
     {
         $link=$this->linkRepository->check($linkDetails->getOriginalUrl());
         try {
@@ -71,7 +71,7 @@ class LinkService implements LinkServiceInterface
         return $this->linkRepository->getAllByUser($this->linkModel->getUserId(), $currentUser);
     }
 
-    public function getOriginalLink(string $shortCode, string $currentUserId): LinkModel
+    public function getOriginalLink(string $shortCode, string|int $currentUserId): LinkModel
     {
         $this->linkModel->setShortCode($shortCode);
         return $this->linkRepository->getByShortCode($this->linkModel->getShortCode(), $currentUserId);
