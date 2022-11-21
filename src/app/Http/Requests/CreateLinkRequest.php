@@ -12,7 +12,7 @@ class CreateLinkRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -22,18 +22,20 @@ class CreateLinkRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function set(CreateLinkRequest $request, LinkDetails $linkDetails){
+    public function getLinkDetails(CreateLinkRequest $request):LinkDetails{
+        $linkDetails = new LinkDetails();
         $linkDetails->setOriginalUrl($request->originalUrl);
         $linkDetails->setIsPublic($request->isPublic);
+        return $linkDetails;
     }
-    public function rules()
+    public function rules(): array
     {
         return [
             'originalUrl' => 'required|unique:links',
             'isPublic'=>'required',
         ];
     }
-    public function messages()
+    public function messages(): array
     {
         return[
             'originalUrl.required'=>'A originalUrl is required',

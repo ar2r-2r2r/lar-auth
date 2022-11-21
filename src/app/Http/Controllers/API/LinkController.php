@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers\API;
 
 use App\Events\CreateLinkSuccessful;
@@ -11,25 +12,22 @@ use App\Http\Requests\GetOriginalLinkRequest;
 use App\Http\Requests\GetUserLinksRequest;
 use App\Http\Requests\UpdateDelLinkRequest;
 use App\Interfaces\LinkServiceInterface;
-use App\Models\LinkDetails;
 
 class LinkController extends Controller
 {
     private LinkServiceInterface $linkService;
 
-    private LinkDetails $linkDetails;
 
-    public function __construct(LinkServiceInterface $linkService, LinkDetails $linkDetails)
+    public function __construct(LinkServiceInterface $linkService)
     {
         $this->linkService=$linkService;
-        $this->linkDetails=$linkDetails;
     }
     public function createLink(CreateLinkRequest $request)
     {
         try {
             $request->validated();
-            $request->set($request, $this->linkDetails);
-            $result = $this->linkService->createLink($this->linkDetails);
+            $linkDetails=$request->getLinkDetails($request);
+            $result = $this->linkService->createLink($linkDetails);
             CreateLinkSuccessful::dispatch(auth()->user());
             return $result;
         }catch (\Exception $exception){
