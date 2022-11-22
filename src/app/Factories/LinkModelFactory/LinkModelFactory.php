@@ -7,7 +7,7 @@ use App\Models\LinkModel;
 
 class LinkModelFactory
 {
-    public function createModel():LinkModel
+    public function createModel(): LinkModel
     {
         return new LinkModel();
     }

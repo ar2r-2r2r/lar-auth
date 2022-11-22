@@ -1,8 +1,10 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Listeners;
 
-use App\Services\NotificationService;
+use App\Services\EmailNotificationService;
+use App\Services\TelegramNotificationService;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
 class SendDelConfirmationEmail implements ShouldQueue
@@ -26,7 +28,9 @@ class SendDelConfirmationEmail implements ShouldQueue
      */
     public function handle($event)
     {
-        NotificationService::email($event, 'del');
-        NotificationService::telegram($event, 'del');
+        $emailNotificationService = new EmailNotificationService();
+        $telegramNotificationService = new TelegramNotificationService();
+        $emailNotificationService->send($event, 'del');
+        $telegramNotificationService->send($event, 'del');
     }
 }

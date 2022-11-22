@@ -1,23 +1,14 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Helper\MailHelper;
-use App\Helper\TgHelper;
-
-class NotificationService
+abstract class NotificationService
 {
     public function __construct()
     {
     }
 
-    public static function email($event, $action)
-    {
-        MailHelper::sendMessage($event, $action);
-    }
+    abstract function send($event, $action);
 
-    public static function telegram($event, $action)
-    {
-        TgHelper::sendMessage($event, $action);
-    }
 }

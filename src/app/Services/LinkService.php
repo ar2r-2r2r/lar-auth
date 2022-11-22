@@ -25,7 +25,7 @@ class LinkService implements LinkServiceInterface
     ) {
         $this->linkRepository = $linkRepository;
         $this->linkModelFactory = $linkModelFactory;
-        $this->linkModel=$this->linkModelFactory->createModel();
+        $this->linkModel = $this->linkModelFactory->createModel();
     }
 
     public function createLink(
