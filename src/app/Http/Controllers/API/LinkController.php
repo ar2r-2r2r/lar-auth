@@ -20,6 +20,7 @@ class LinkController extends Controller
 {
     private LinkServiceInterface $linkService;
     private UserServiceInterface $userService;
+    private int|string $currentUserId;
 
     public function __construct(
         LinkServiceInterface $linkService,
@@ -27,6 +28,7 @@ class LinkController extends Controller
     ) {
         $this->linkService = $linkService;
         $this->userService = $userService;
+        $this->currentUserId = $this->userService->getId();
     }
 
     public function createLink(CreateLinkRequest $request)
@@ -34,9 +36,9 @@ class LinkController extends Controller
         try {
             $request->validated();
             $linkDetails = $request->getLinkDetails($request);
-            $currentUserId = $this->userService->getId();
+
             $result = $this->linkService->createLink($linkDetails,
-                $currentUserId);
+                $this->currentUserId);
             CreateLinkSuccessful::dispatch(auth()->user());
 
             return $result;
@@ -51,7 +53,8 @@ class LinkController extends Controller
         try {
             $request->validated();
             $request->setLinkId($request->linkId);
-            $result = $this->linkService->updateLink($request->getLinkId());
+            $result = $this->linkService->updateLink($request->getLinkId(),
+                $this->currentUserId);
             UpdateLinkSuccessful::dispatch(auth()->user());
 
             return $result;
@@ -66,7 +69,8 @@ class LinkController extends Controller
         try {
             $request->validated();
             $request->setLinkId($request->linkId);
-            $result = $this->linkService->deleteLink($request->getLinkId());
+            $result = $this->linkService->deleteLink($request->getLinkId(),
+                $this->currentUserId);
             DelLinkSuccessful::dispatch(auth()->user());
 
             return $result;
@@ -81,7 +85,8 @@ class LinkController extends Controller
             $request->validated();
             $request->setUserId($request->userId);
 
-            return $this->linkService->getUserLinks($request->getUserId());
+            return $this->linkService->getUserLinks($request->getUserId(),
+                $this->currentUserId);
         } catch (Exception $exception) {
             return $exception->getMessage();
         }
@@ -91,11 +96,10 @@ class LinkController extends Controller
     {
         try {
             $request->validated();
-            $currentUserId = $this->userService->getId();
             $request->setShortCode($request->shortCode);
 
             return $this->linkService->getOriginalLink($request->getShortCode(),
-                $currentUserId);
+                $this->currentUserId);
         } catch (Exception $exception) {
             return $exception->getMessage();
         }

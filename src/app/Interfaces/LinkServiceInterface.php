@@ -12,11 +12,11 @@ interface LinkServiceInterface
         int|string $currentUserId
     );
 
-    public function updateLink(int|string $linkId);
+    public function updateLink(int|string $linkId, int|string $currentUserId);
 
-    public function deleteLink(int|string $linkId);
+    public function deleteLink(int|string $linkId, int|string $currentUserId);
 
-    public function getUserLinks(int|string $userId);
+    public function getUserLinks(int|string $userId, int|string $currentUserId);
 
     public function getOriginalLink(
         string $shortCode,

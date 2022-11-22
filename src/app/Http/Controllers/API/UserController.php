@@ -16,17 +16,17 @@ class UserController extends Controller
         $this->userService = $userService;
     }
 
-    public function isAuth():bool
+    public function isAuth(): bool
     {
         return $this->userService->isAuthenticated();
     }
 
-    public function getName():string
+    public function getName(): string
     {
         return $this->userService->getName();
     }
 
-    public function getId():int|string
+    public function getId(): int|string
     {
         return $this->userService->getId();
     }

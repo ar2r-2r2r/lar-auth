@@ -49,10 +49,12 @@ class LinkService implements LinkServiceInterface
         return $result;
     }
 
-    public function updateLink($linkId): LinkModel
-    {
+    public function updateLink(
+        int|string $linkId,
+        int|string $currentUserId
+    ): LinkModel {
         $this->linkModel->setId($linkId);
-        $this->linkModel->setUserId(auth()->user()->id);
+        $this->linkModel->setUserId($currentUserId);
         $this->linkModel->setShortCode(Util::generateShortLink());
         $result = $this->linkRepository->update(
             $this->linkModel->getUserId(),
@@ -63,21 +65,23 @@ class LinkService implements LinkServiceInterface
         return $result;
     }
 
-    public function deleteLink($linkId)
+    public function deleteLink($linkId, int|string $currentUserId)
     {
-        $this->linkModel->setUserId(auth()->user()->id);
+        $this->linkModel->setUserId($currentUserId);
         $this->linkModel->setId($linkId);
         $this->linkRepository->delete($this->linkModel->getUserId(),
             $this->linkModel->getId());
     }
 
-    public function getUserLinks($userId): Collection
-    {
+    public function getUserLinks(
+        int|string $userId,
+        int|string $currentUserId
+    ): Collection {
         $this->linkModel->setUserId($userId);
-        $currentUser = auth()->user()->id;
+
 
         return $this->linkRepository->getAllByUser($this->linkModel->getUserId(),
-            $currentUser);
+            $currentUserId);
     }
 
     public function getOriginalLink(

@@ -5,7 +5,7 @@ namespace App\Interfaces;
 
 interface UserRepositoryInterface
 {
-    public function check():bool;
+    public function check(): bool;
 
-    public function hasUser():bool;
+    public function hasUser(): bool;
 }
