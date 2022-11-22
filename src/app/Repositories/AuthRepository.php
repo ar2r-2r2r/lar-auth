@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Repositories;
 
@@ -10,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 class AuthRepository implements AuthRepositoryInterface
 {
 
-    public function create(Request $request)
+    public function create(Request $request): User
     {
         return User::create([
             'name' => $request->name,
@@ -20,7 +21,7 @@ class AuthRepository implements AuthRepositoryInterface
         ]);
     }
 
-    public function set(Request $request)
+    public function set(Request $request): User
     {
         return User::where('email', $request->email)->first();
     }

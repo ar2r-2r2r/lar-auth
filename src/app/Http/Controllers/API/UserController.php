@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Controllers\API;
 
@@ -15,17 +16,17 @@ class UserController extends Controller
         $this->userService = $userService;
     }
 
-    public function isAuth()
+    public function isAuth():bool
     {
         return $this->userService->isAuthenticated();
     }
 
-    public function getName()
+    public function getName():string
     {
         return $this->userService->getName();
     }
 
-    public function getId()
+    public function getId():int|string
     {
         return $this->userService->getId();
     }

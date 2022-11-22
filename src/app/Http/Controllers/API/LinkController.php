@@ -50,7 +50,8 @@ class LinkController extends Controller
     {
         try {
             $request->validated();
-            $result = $this->linkService->updateLink($request->linkId);
+            $request->setLinkId($request->linkId);
+            $result = $this->linkService->updateLink($request->getLinkId());
             UpdateLinkSuccessful::dispatch(auth()->user());
 
             return $result;
@@ -64,7 +65,8 @@ class LinkController extends Controller
     {
         try {
             $request->validated();
-            $result = $this->linkService->deleteLink($request->linkId);
+            $request->setLinkId($request->linkId);
+            $result = $this->linkService->deleteLink($request->getLinkId());
             DelLinkSuccessful::dispatch(auth()->user());
 
             return $result;
@@ -77,8 +79,9 @@ class LinkController extends Controller
     {
         try {
             $request->validated();
+            $request->setUserId($request->userId);
 
-            return $this->linkService->getUserLinks($request->userId);
+            return $this->linkService->getUserLinks($request->getUserId());
         } catch (Exception $exception) {
             return $exception->getMessage();
         }
@@ -89,8 +92,9 @@ class LinkController extends Controller
         try {
             $request->validated();
             $currentUserId = $this->userService->getId();
+            $request->setShortCode($request->shortCode);
 
-            return $this->linkService->getOriginalLink($request->shortCode,
+            return $this->linkService->getOriginalLink($request->getShortCode(),
                 $currentUserId);
         } catch (Exception $exception) {
             return $exception->getMessage();

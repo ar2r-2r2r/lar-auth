@@ -41,4 +41,6 @@ class CreateLinkRequest extends FormRequest
             'isPublic' => 'A isPublic  is required',
         ];
     }
+
 }
+

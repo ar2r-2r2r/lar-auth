@@ -6,6 +6,24 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class GetUserLinksRequest extends FormRequest
 {
+    private int|string $userId;
+
+    /**
+     * @return int|string
+     */
+    public function getUserId(): int|string
+    {
+        return $this->userId;
+    }
+
+    /**
+     * @param int|string $userId
+     */
+    public function setUserId(int|string $userId): void
+    {
+        $this->userId = $userId;
+    }
+
     /**
      * Determine if the user is authorized to make this request.
      *
