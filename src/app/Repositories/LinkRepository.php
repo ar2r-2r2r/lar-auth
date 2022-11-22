@@ -61,17 +61,15 @@ class LinkRepository implements LinkRepositoryInterface
             })->first();
     }
 
-    public function getAll(): Collection
+    public function getAll(int|string $currentUserId): Collection
     {
-        $currentUserId = auth()->user()->id;
-        $public = LinkModel::where('isPublic', 1)->get([
+
+        return LinkModel::where('userId', $currentUserId)->get([
             'shortCode',
             'originalUrl',
-        ]);          //public Url
-        $private = LinkModel::where('userId', $currentUserId)->where('isPublic',
-            0)->get(['shortCode', 'originalUrl']);    //private Url
+        ]);
 
-        return $all = $public->merge($private);
+
     }
 
     public function getAllByUser(

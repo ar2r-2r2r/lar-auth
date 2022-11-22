@@ -36,6 +36,7 @@ interface LinkRepositoryInterface
     ): LinkModel;                          //returns link by its short code
 
     public function getAll(
+        int|string $currentUserId
     ): Collection;                                                  // returns all links
 
     public function getAllByUser(
