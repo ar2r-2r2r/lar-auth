@@ -1,11 +1,13 @@
 <?php
+
 namespace App\Repositories;
 
 use App\Interfaces\UserRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 
 
-class UserRepository implements UserRepositoryInterface{
+class UserRepository implements UserRepositoryInterface
+{
 
     public function check()
     {

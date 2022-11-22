@@ -1,3 +1,3 @@
 <x-mail::message>
-Delete Successfully!
+    Delete Successfully!
 </x-mail::message>

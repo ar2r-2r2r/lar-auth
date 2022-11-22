@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class LinkModel extends Model
 {
     use HasFactory;
+
     protected $table = 'links';
     protected int $id;                          // internal unique identifier of this link
     protected int $userId;                      // unique identifier of user who created that link
@@ -15,13 +16,15 @@ class LinkModel extends Model
     protected string $shortCode;
     protected bool $isPublic;                   // determine if link is public or private
     protected string $createdDate;              // link creation date
-    protected $fillable = [
-        'userId',
-        'originalUrl',
-        'shortCode',
-        'isPublic',
-        'createdDate',
-    ];
+    protected $fillable
+        = [
+            'userId',
+            'originalUrl',
+            'shortCode',
+            'isPublic',
+            'createdDate',
+        ];
+
     /**
      * @return int
      */

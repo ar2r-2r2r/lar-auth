@@ -17,30 +17,35 @@ class LinkService implements LinkServiceInterface
     private LinkRepositoryInterface $linkRepository;
     private LinkModel $linkModel;
 
-    public function __construct(LinkRepositoryInterface $linkRepository, LinkModel $linkModel)
-    {
-        $this->linkRepository=$linkRepository;
-        $this->linkModel=$linkModel;
+    public function __construct(
+        LinkRepositoryInterface $linkRepository,
+        LinkModel $linkModel
+    ) {
+        $this->linkRepository = $linkRepository;
+        $this->linkModel = $linkModel;
     }
 
-    public function createLink(LinkDetails $linkDetails, string|int $currentUserId): LinkModel|string
-    {
-        $link=$this->linkRepository->check($linkDetails->getOriginalUrl());
+    public function createLink(
+        LinkDetails $linkDetails,
+        string|int $currentUserId
+    ): LinkModel|string {
+        $link = $this->linkRepository->check($linkDetails->getOriginalUrl());
         try {
-            if ($link==$linkDetails->getOriginalUrl()) {
+            if ($link == $linkDetails->getOriginalUrl()) {
                 throw new OriginalLinkAlreadyExistsException('already exists');
             }
             $this->linkModel->setUserId($currentUserId);
             $this->linkModel->setShortCode(Util::generateShortLink());
-            $result=$this->linkRepository->create(
+            $result = $this->linkRepository->create(
                 $this->linkModel->getUserId(),
                 $this->linkModel->getShortCode(),
                 $linkDetails
             );
             Cache::put('modelLink', '$result', 300);
-        }catch (OriginalLinkAlreadyExistsException $e) {
-            $result=$e->errorMessage();
+        } catch (OriginalLinkAlreadyExistsException $e) {
+            $result = $e->errorMessage();
         }
+
         return $result;
     }
 
@@ -49,11 +54,12 @@ class LinkService implements LinkServiceInterface
         $this->linkModel->setId($linkId);
         $this->linkModel->setUserId(auth()->user()->id);
         $this->linkModel->setShortCode(Util::generateShortLink());
-        $result=$this->linkRepository->update(
+        $result = $this->linkRepository->update(
             $this->linkModel->getUserId(),
             $this->linkModel->getId(),
             $this->linkModel->getShortCode());
         Cache::put('modelLink', '$result', 300);
+
         return $result;
     }
 
@@ -61,20 +67,27 @@ class LinkService implements LinkServiceInterface
     {
         $this->linkModel->setUserId(auth()->user()->id);
         $this->linkModel->setId($linkId);
-        $this->linkRepository->delete($this->linkModel->getUserId(), $this->linkModel->getId());
+        $this->linkRepository->delete($this->linkModel->getUserId(),
+            $this->linkModel->getId());
     }
 
     public function getUserLinks($userId): Collection
     {
         $this->linkModel->setUserId($userId);
-        $currentUser=auth()->user()->id;
-        return $this->linkRepository->getAllByUser($this->linkModel->getUserId(), $currentUser);
+        $currentUser = auth()->user()->id;
+
+        return $this->linkRepository->getAllByUser($this->linkModel->getUserId(),
+            $currentUser);
     }
 
-    public function getOriginalLink(string $shortCode, string|int $currentUserId): LinkModel
-    {
+    public function getOriginalLink(
+        string $shortCode,
+        string|int $currentUserId
+    ): LinkModel {
         $this->linkModel->setShortCode($shortCode);
-        return $this->linkRepository->getByShortCode($this->linkModel->getShortCode(), $currentUserId);
+
+        return $this->linkRepository->getByShortCode($this->linkModel->getShortCode(),
+            $currentUserId);
     }
 
 }

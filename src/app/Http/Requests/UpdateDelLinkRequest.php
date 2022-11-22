@@ -24,7 +24,7 @@ class UpdateDelLinkRequest extends FormRequest
     public function rules()
     {
         return [
-            'linkId' => 'required'
+            'linkId' => 'required',
         ];
     }
 }

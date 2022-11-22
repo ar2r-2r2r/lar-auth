@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\RegisterUserRequest;
 use App\Interfaces\AuthServiceInterface;
+use Exception;
 use Illuminate\Http\Request;
 
 
@@ -15,15 +16,17 @@ class AuthController extends Controller
 
     public function __construct(AuthServiceInterface $authService)
     {
-        $this->authService=$authService;
+        $this->authService = $authService;
     }
 
-    public function createUser(RegisterUserRequest $request){
-        try{
+    public function createUser(RegisterUserRequest $request)
+    {
+        try {
             $request->validated();
-            $user=$this->authService->register($request);
+            $user = $this->authService->register($request);
+
             return response()->json('User created Successfully!', 201);
-        }catch (\Exception $exception){
+        } catch (Exception $exception) {
             return response()->json($exception, 500);
         }
 
@@ -31,11 +34,12 @@ class AuthController extends Controller
 
     public function loginUser(LoginUserRequest $request)
     {
-        try{
+        try {
             $request->validated();
-            $response=$this->authService->login($request);
-            return response()->json($response,200);
-        }catch (\Exception $exception){
+            $response = $this->authService->login($request);
+
+            return response()->json($response, 200);
+        } catch (Exception $exception) {
             return response()->json($exception, 500);
         }
 
@@ -45,8 +49,9 @@ class AuthController extends Controller
     {
         try {
             $this->authService->logout($request);
-            return response()->json('User logout Successfully',200);
-        }catch (\Exception $exception) {
+
+            return response()->json('User logout Successfully', 200);
+        } catch (Exception $exception) {
             return response()->json($exception, 500);
         }
 

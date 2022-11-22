@@ -1,4 +1,4 @@
 <x-mail::message>
 
-#Link created successully
+    #Link created successully
 </x-mail::message>

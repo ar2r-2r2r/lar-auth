@@ -1,3 +1,3 @@
 <x-mail::message>
-Update Successfully!
+    Update Successfully!
 </x-mail::message>

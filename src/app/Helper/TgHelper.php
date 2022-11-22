@@ -3,13 +3,13 @@
 namespace App\Helper;
 
 use App\Notifications\TelegramNotification;
-use Illuminate\Support\Facades\Auth;
 
 
 class TgHelper
 {
-    public static function sendMessage($event,$action){
-        switch ($action){
+    public static function sendMessage($event, $action)
+    {
+        switch ($action) {
             case 'create':
                 $event->user->notify(new TelegramNotification('created!'));             //send to user email
                 break;

@@ -19,24 +19,24 @@ class ValidationTest extends TestCase
      */
     public function test_it_contains_valid_rules_CreateLink()
     {
-        $r=new CreateLinkRequest();
+        $r = new CreateLinkRequest();
         $this->assertEquals([
             'originalUrl' => 'required|unique:links',
-            'isPublic'=>'required',
+            'isPublic' => 'required',
         ], $r->rules());
     }
 
     public function test_it_contains_valid_rules_GetOriginalLink()
     {
-        $r=new GetOriginalLinkRequest();
+        $r = new GetOriginalLinkRequest();
         $this->assertEquals([
-            'shortCode' => 'required'
+            'shortCode' => 'required',
         ], $r->rules());
     }
 
     public function test_it_contains_valid_rules_GetUserLink()
     {
-        $r=new GetUserLinksRequest();
+        $r = new GetUserLinksRequest();
         $this->assertEquals([
             'userId' => 'required',
         ], $r->rules());
@@ -44,28 +44,28 @@ class ValidationTest extends TestCase
 
     public function test_it_contains_valid_rules_LoginUser()
     {
-        $r=new LoginUserRequest();
+        $r = new LoginUserRequest();
         $this->assertEquals([
             'email' => 'required',
-            'password'=>'required'
+            'password' => 'required',
         ], $r->rules());
     }
 
     public function test_it_contains_valid_rules_RegisterUser()
     {
-        $r=new RegisterUserRequest();
+        $r = new RegisterUserRequest();
         $this->assertEquals([
             'name' => 'required',
-            'email'=>'required',
-            'password'=>'required'
+            'email' => 'required',
+            'password' => 'required',
         ], $r->rules());
     }
 
     public function test_it_contains_valid_rules_UpdateDelLink()
     {
-        $r=new UpdateDelLinkRequest();
+        $r = new UpdateDelLinkRequest();
         $this->assertEquals([
-            'linkId' => 'required'
+            'linkId' => 'required',
         ], $r->rules());
     }
 

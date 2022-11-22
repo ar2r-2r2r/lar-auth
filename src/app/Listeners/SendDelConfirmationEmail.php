@@ -2,11 +2,8 @@
 
 namespace App\Listeners;
 
-use App\Mail\DelEmail;
 use App\Services\NotificationService;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Support\Facades\Mail;
 
 class SendDelConfirmationEmail implements ShouldQueue
 {
@@ -23,12 +20,13 @@ class SendDelConfirmationEmail implements ShouldQueue
     /**
      * Handle the event.
      *
-     * @param  object  $event
+     * @param object $event
+     *
      * @return void
      */
     public function handle($event)
     {
-        NotificationService::email($event,'del');
-        NotificationService::telegram($event,'del');
+        NotificationService::email($event, 'del');
+        NotificationService::telegram($event, 'del');
     }
 }

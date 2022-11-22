@@ -19,8 +19,9 @@ class GenerateShortLinkTest extends TestCase
 
     public function test_find_modelLink_by_Id()
     {
-        $shortLink=Util::generateShortLink();
-        $this->assertMatchesRegularExpression("/.{6}/", $shortLink);        //check for only 6 symbols
+        $shortLink = Util::generateShortLink();
+        $this->assertMatchesRegularExpression("/.{6}/",
+            $shortLink);        //check for only 6 symbols
     }
 
 

@@ -2,16 +2,14 @@
 
 namespace App\Listeners;
 
-use App\Mail\UpdateEmail;
 use App\Services\NotificationService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Support\Facades\Mail;
 
 class SendUpdateConfirmationEmail implements ShouldQueue
 {
     use Queueable;
+
     /**
      * Create the event listener.
      *
@@ -25,12 +23,13 @@ class SendUpdateConfirmationEmail implements ShouldQueue
     /**
      * Handle the event.
      *
-     * @param  object  $event
+     * @param object $event
+     *
      * @return void
      */
     public function handle($event)
     {
-        NotificationService::email($event,'update');
-        NotificationService::telegram($event,'update');
+        NotificationService::email($event, 'update');
+        NotificationService::telegram($event, 'update');
     }
 }

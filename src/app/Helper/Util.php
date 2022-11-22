@@ -4,7 +4,7 @@ namespace App\Helper;
 
 class Util
 {
-    public static function generateShortLink():string
+    public static function generateShortLink(): string
     {
         $letters = 'qwertyuiopasdfghjkl1234567890';
         $count = strlen($letters);
@@ -17,6 +17,7 @@ class Util
             $random = rand(0, 10);
             $result .= $letters[$random];
         }
+
         return $result;
     }
 

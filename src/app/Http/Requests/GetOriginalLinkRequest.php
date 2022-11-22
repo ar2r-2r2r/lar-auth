@@ -24,7 +24,7 @@ class GetOriginalLinkRequest extends FormRequest
     public function rules()
     {
         return [
-            'shortCode' => 'required'
+            'shortCode' => 'required',
         ];
     }
 

@@ -6,12 +6,12 @@ use App\Interfaces\AuthServiceInterface;
 use App\Interfaces\LinkServiceInterface;
 use App\Interfaces\UserServiceInterface;
 use App\Models\LinkModel;
-use App\Services\LinkService;
-use App\Services\UserService;
-use App\Repositories\UserRepository;
 use App\Repositories\AuthRepository;
 use App\Repositories\LinkRepository;
+use App\Repositories\UserRepository;
 use App\Services\AuthService;
+use App\Services\LinkService;
+use App\Services\UserService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider

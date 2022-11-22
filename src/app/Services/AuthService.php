@@ -9,25 +9,28 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 
-class AuthService implements AuthServiceInterface {
+class AuthService implements AuthServiceInterface
+{
 
     private AuthRepositoryInterface $authRepository;
 
     public function __construct(AuthRepositoryInterface $authRepository)
     {
-        $this->authRepository=$authRepository;
+        $this->authRepository = $authRepository;
     }
+
     public function register(Request $request)
     {
-        $user=$this->authRepository->create($request);
+        $user = $this->authRepository->create($request);
     }
 
     public function login(Request $request)
     {
-        if(!Auth::attempt($request->only(['email', 'password']))){
+        if (!Auth::attempt($request->only(['email', 'password']))) {
             return 'Email & Password does not match with our record';
         }
-        $user=$this->authRepository->set($request);
+        $user = $this->authRepository->set($request);
+
         return $user;
 
     }

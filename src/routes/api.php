@@ -5,7 +5,6 @@ use App\Http\Controllers\API\LinkController;
 use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Notifications\TelegramNotification;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,15 +24,23 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/auth/createUser', [AuthController::class, 'createUser']);
 Route::get('/auth/loginUser', [AuthController::class, 'loginUser']);
-Route::get('/auth/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+Route::get('/auth/logout', [AuthController::class, 'logout'])
+    ->middleware('auth:sanctum');
 
 Route::get('/auth/is', [UserController::class, 'isAuth']);
-Route::get('/auth/name', [UserController::class, 'getName'])->middleware('auth:sanctum');
-Route::get('/auth/id', [UserController::class, 'getId'])->middleware('auth:sanctum');
+Route::get('/auth/name', [UserController::class, 'getName'])
+    ->middleware('auth:sanctum');
+Route::get('/auth/id', [UserController::class, 'getId'])
+    ->middleware('auth:sanctum');
 
-Route::post('/link/create', [LinkController::class, 'createLink'])->middleware('auth:sanctum');
-Route::put('/link/update',[LinkController::class, 'updateLink'])->middleware('auth:sanctum');
-Route::delete('/link/delete',[LinkController::class, 'deleteLink'])->middleware('auth:sanctum');
-Route::get('/link/getUserLinks',[LinkController::class, 'getUserLinks'])->middleware('auth:sanctum');
-Route::get('/link/getOriginalLink',[LinkController::class, 'getOriginalLink'])->middleware('auth:sanctum');
+Route::post('/link/create', [LinkController::class, 'createLink'])
+    ->middleware('auth:sanctum');
+Route::put('/link/update', [LinkController::class, 'updateLink'])
+    ->middleware('auth:sanctum');
+Route::delete('/link/delete', [LinkController::class, 'deleteLink'])
+    ->middleware('auth:sanctum');
+Route::get('/link/getUserLinks', [LinkController::class, 'getUserLinks'])
+    ->middleware('auth:sanctum');
+Route::get('/link/getOriginalLink', [LinkController::class, 'getOriginalLink'])
+    ->middleware('auth:sanctum');
 

@@ -4,17 +4,18 @@ namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
-use TelegramNotifications\TelegramChannel;
 use TelegramNotifications\Messages\TelegramMessage;
+use TelegramNotifications\TelegramChannel;
 
 class TelegramNotification extends Notification
 {
     use Queueable;
 
     private string $msg;
+
     public function __construct(string $msg)
     {
-        $this->msg=$msg;
+        $this->msg = $msg;
     }
 
     public function via()
