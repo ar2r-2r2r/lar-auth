@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Exceptions;
 
@@ -6,10 +7,17 @@ use Exception;
 
 class OriginalLinkAlreadyExistsException extends Exception
 {
-    public function errorMessage()
+    public function __construct($message)
     {
-        $errorMsg = 'this original Link Aldready Exists';
+        parent::__construct($message);
+    }
 
-        return $errorMsg;
+    public function changeRecreate(bool $recreate): bool
+    {
+        if ($recreate) {
+            return true;
+        }
+
+        return false;
     }
 }

@@ -41,9 +41,9 @@ class LinkController extends Controller
                 $this->currentUserId);
             CreateLinkSuccessful::dispatch(auth()->user());
 
-            return $result;
+            return response()->json($result, 201);
         } catch (Exception $exception) {
-            return $exception->getMessage();
+            return response()->json($exception->getMessage(), 500);
         }
 
     }
@@ -57,9 +57,9 @@ class LinkController extends Controller
                 $this->currentUserId);
             UpdateLinkSuccessful::dispatch(auth()->user());
 
-            return $result;
+            return response()->json($result, 200);
         } catch (Exception $exception) {
-            return $exception->getMessage();
+            return response()->json($exception->getMessage(), 500);
         }
 
     }
@@ -73,9 +73,9 @@ class LinkController extends Controller
                 $this->currentUserId);
             DelLinkSuccessful::dispatch(auth()->user());
 
-            return $result;
+            return response()->json("Deleted", 200);
         } catch (Exception $exception) {
-            return $exception->getMessage();
+            return response()->json($exception->getMessage(), 500);
         }
     }
 
@@ -85,10 +85,12 @@ class LinkController extends Controller
             $request->validated();
             $request->setUserId($request->userId);
 
-            return $this->linkService->getUserLinks($request->getUserId(),
+            $result = $this->linkService->getUserLinks($request->getUserId(),
                 $this->currentUserId);
+
+            return response()->json($result, 200);
         } catch (Exception $exception) {
-            return $exception->getMessage();
+            return response()->json($exception->getMessage(), 500);
         }
     }
 
@@ -97,11 +99,13 @@ class LinkController extends Controller
         try {
             $request->validated();
             $request->setShortCode($request->shortCode);
-
-            return $this->linkService->getOriginalLink($request->getShortCode(),
+            $result
+                = $this->linkService->getOriginalLink($request->getShortCode(),
                 $this->currentUserId);
+
+            return response()->json($result, 200);
         } catch (Exception $exception) {
-            return $exception->getMessage();
+            return response()->json($exception->getMessage(), 500);
         }
 
     }

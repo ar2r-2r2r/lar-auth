@@ -35,14 +35,14 @@ interface LinkRepositoryInterface
         string $currentUserId
     ): LinkModel;                          //returns link by its short code
 
-    public function getAll(
-        int|string $currentUserId
-    ): Collection;                                                  // returns all links
+    public function getAll(): Collection;             //returns all links
 
     public function getAllByUser(
         int|string $userId,
         int|string $currentUserId
-    ): Collection;                       // returns all user-specific links
+    ): Collection;                  // returns all user-specific links
 
-    public function check(string $originalUrl): Collection;
+    public function checkOriginalAlreadyExist(string $originalUrl);
+
+    public function checkLinkIdAlreadyExist(string $linkId);
 }

@@ -29,18 +29,11 @@ class CreateLinkRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'originalUrl' => 'required|unique:links',
+            'originalUrl' => 'required',
             'isPublic' => 'required',
         ];
     }
 
-    public function messages(): array
-    {
-        return [
-            'originalUrl.required' => 'A originalUrl is required',
-            'isPublic' => 'A isPublic  is required',
-        ];
-    }
 
 }
 

@@ -28,26 +28,31 @@ class LinkService implements LinkServiceInterface
         $this->linkModel = $this->linkModelFactory->createModel();
     }
 
+
     public function createLink(
         LinkDetails $linkDetails,
         string|int $currentUserId
     ): LinkModel|string {
-        $link = $this->linkRepository->check($linkDetails->getOriginalUrl());
-        try {
-            if ($link == $linkDetails->getOriginalUrl()) {
-                throw new OriginalLinkAlreadyExistsException('already exists');
+        $this->linkRepository->checkOriginalAlreadyExist($linkDetails->getOriginalUrl());
+        $this->linkModel->setUserId($currentUserId);
+
+        do {
+            $recreate = true;
+            try {
+                $shortCode = Util::generateShortLink();
+                $this->linkRepository->checkShortCodeAlreadyExist($shortCode);
+            } catch (OriginalLinkAlreadyExistsException $ex) {
+                $recreate = $ex->changeRecreate($recreate);
             }
-            $this->linkModel->setUserId($currentUserId);
-            $this->linkModel->setShortCode(Util::generateShortLink());
-            $result = $this->linkRepository->create(
-                $this->linkModel->getUserId(),
-                $this->linkModel->getShortCode(),
-                $linkDetails
-            );
-            Cache::put('modelLink', '$result', 300);
-        } catch (OriginalLinkAlreadyExistsException $e) {
-            $result = $e->errorMessage();
-        }
+        } while (!$recreate);
+
+        $this->linkModel->setShortCode($shortCode);
+        $result = $this->linkRepository->create(
+            $this->linkModel->getUserId(),
+            $this->linkModel->getShortCode(),
+            $linkDetails
+        );
+        Cache::put('modelLink', '$result', 300);
 
         return $result;
     }
@@ -56,6 +61,8 @@ class LinkService implements LinkServiceInterface
         int|string $linkId,
         int|string $currentUserId
     ): LinkModel {
+        $this->linkRepository->checkLinkIdAlreadyExist($linkId);
+        $linkId = (int)$linkId;
         $this->linkModel->setId($linkId);
         $this->linkModel->setUserId($currentUserId);
         $this->linkModel->setShortCode(Util::generateShortLink());
@@ -70,6 +77,7 @@ class LinkService implements LinkServiceInterface
 
     public function deleteLink($linkId, int|string $currentUserId)
     {
+        $linkId = (int)$linkId;
         $this->linkModel->setUserId($currentUserId);
         $this->linkModel->setId($linkId);
         $this->linkRepository->delete($this->linkModel->getUserId(),
@@ -81,7 +89,6 @@ class LinkService implements LinkServiceInterface
         int|string $currentUserId
     ): Collection {
         $this->linkModel->setUserId($userId);
-
 
         return $this->linkRepository->getAllByUser($this->linkModel->getUserId(),
             $currentUserId);
