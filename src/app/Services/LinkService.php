@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Exceptions\OriginalLinkAlreadyExistsException;
+use App\Factories\LinkModelFactory\LinkModelFactory;
 use App\Helper\Util;
 use App\Interfaces\LinkRepositoryInterface;
 use App\Interfaces\LinkServiceInterface;
@@ -15,14 +16,16 @@ use Illuminate\Support\Facades\Cache;
 class LinkService implements LinkServiceInterface
 {
     private LinkRepositoryInterface $linkRepository;
+    private LinkModelFactory $linkModelFactory;
     private LinkModel $linkModel;
 
     public function __construct(
         LinkRepositoryInterface $linkRepository,
-        LinkModel $linkModel
+        LinkModelFactory $linkModelFactory
     ) {
         $this->linkRepository = $linkRepository;
-        $this->linkModel = $linkModel;
+        $this->linkModelFactory = $linkModelFactory;
+        $this->linkModel=$this->linkModelFactory->createModel();
     }
 
     public function createLink(

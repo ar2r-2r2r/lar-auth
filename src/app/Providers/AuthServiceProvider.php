@@ -25,14 +25,7 @@ class AuthServiceProvider extends ServiceProvider
      * @return void
      */
 
-//    public function register()
-//    {
-//
-//        $this->app->bind(AuthRepositoryInterface::class, function () {
-//            return new AuthRepository();
-//        });
-//
-//    }
+
     public function boot()
     {
         $this->registerPolicies();
