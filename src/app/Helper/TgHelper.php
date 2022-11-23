@@ -3,10 +3,7 @@
 namespace App\Helper;
 
 
-use App\Models\User;
 use App\Notifications\TelegramNotification;
-
-use Illuminate\Support\Facades\DB;
 
 
 class TgHelper

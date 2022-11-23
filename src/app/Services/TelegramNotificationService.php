@@ -11,7 +11,7 @@ class TelegramNotificationService extends NotificationService
 
     function send($userId, $action)
     {
-        $user = User::where('id',$userId) -> first();
+        $user = User::where('id', $userId)->first();
         TgHelper::sendMessage($user, $action);
     }
 }

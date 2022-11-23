@@ -11,7 +11,7 @@ class EmailNotificationService extends NotificationService
 
     function send($userId, $action)
     {
-        $email=User::where('id', $userId)->get('email');
+        $email = User::where('id', $userId)->get('email');
         MailHelper::sendMessage($email, $action);
     }
 }

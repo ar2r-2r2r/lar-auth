@@ -8,7 +8,6 @@ use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\RegisterUserRequest;
 use App\Interfaces\AuthRepositoryInterface;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class AuthRepository implements AuthRepositoryInterface

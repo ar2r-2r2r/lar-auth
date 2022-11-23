@@ -5,7 +5,6 @@ namespace App\Interfaces;
 
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\RegisterUserRequest;
-use Illuminate\Http\Request;
 
 interface AuthRepositoryInterface
 {

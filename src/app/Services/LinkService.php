@@ -91,6 +91,7 @@ class LinkService implements LinkServiceInterface
     ): Collection {
         $this->linkRepository->checkUserIdExist($userId);
         $this->linkModel->setUserId($userId);
+
         return $this->linkRepository->getAllByUser($this->linkModel->getUserId(),
             $currentUserId);
     }
