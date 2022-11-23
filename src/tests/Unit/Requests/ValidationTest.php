@@ -21,7 +21,7 @@ class ValidationTest extends TestCase
     {
         $r = new CreateLinkRequest();
         $this->assertEquals([
-            'originalUrl' => 'required|unique:links',
+            'originalUrl' => 'required',
             'isPublic' => 'required',
         ], $r->rules());
     }
