@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Exceptions\OriginalLinkAlreadyExistsException;
+use App\Exceptions\ShortCodeAlreadyExistsException;
 use App\Factories\LinkModelFactory\LinkModelFactory;
 use App\Helper\Util;
 use App\Interfaces\LinkRepositoryInterface;
@@ -41,7 +41,7 @@ class LinkService implements LinkServiceInterface
             try {
                 $shortCode = Util::generateShortLink();
                 $this->linkRepository->checkShortCodeAlreadyExist($shortCode);
-            } catch (OriginalLinkAlreadyExistsException $ex) {
+            } catch (ShortCodeAlreadyExistsException $ex) {
                 $recreate = $ex->changeRecreate($recreate);
             }
         } while (!$recreate);
@@ -99,6 +99,7 @@ class LinkService implements LinkServiceInterface
         string $shortCode,
         string|int $currentUserId
     ): LinkModel {
+        $this->linkRepository->checkShortCodeNotExist($shortCode);
         $this->linkModel->setShortCode($shortCode);
 
         return $this->linkRepository->getByShortCode($this->linkModel->getShortCode(),

@@ -4,7 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 
-class MyCustomException extends Exception
+class ShortCodeNotExists extends Exception
 {
     public function __construct($message)
     {

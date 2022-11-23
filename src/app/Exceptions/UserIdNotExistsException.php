@@ -4,7 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 
-class OriginalLinkAlreadyExistsException extends Exception
+class UserIdNotExistsException extends Exception
 {
     public function __construct($message)
     {

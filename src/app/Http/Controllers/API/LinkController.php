@@ -7,6 +7,10 @@ namespace App\Http\Controllers\API;
 use App\Events\CreateLinkSuccessful;
 use App\Events\DelLinkSuccessful;
 use App\Events\UpdateLinkSuccessful;
+use App\Exceptions\LinkIdNotExistsException;
+use App\Exceptions\OriginalLinkAlreadyExistsException;
+use App\Exceptions\ShortCodeNotExists;
+use App\Exceptions\UserIdNotExistsException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateLinkRequest;
 use App\Http\Requests\GetOriginalLinkRequest;
@@ -42,7 +46,7 @@ class LinkController extends Controller
             CreateLinkSuccessful::dispatch(auth()->user());
 
             return response()->json($result, 201);
-        } catch (Exception $exception) {
+        } catch (OriginalLinkAlreadyExistsException $exception) {
             return response()->json($exception->getMessage(), 500);
         }
 
@@ -58,7 +62,7 @@ class LinkController extends Controller
             UpdateLinkSuccessful::dispatch(auth()->user());
 
             return response()->json($result, 200);
-        } catch (Exception $exception) {
+        } catch (LinkIdNotExistsException $exception) {
             return response()->json($exception->getMessage(), 500);
         }
 
@@ -74,7 +78,7 @@ class LinkController extends Controller
             DelLinkSuccessful::dispatch(auth()->user());
 
             return response()->json("Deleted", 200);
-        } catch (Exception $exception) {
+        } catch (LinkIdNotExistsException $exception) {
             return response()->json($exception->getMessage(), 500);
         }
     }
@@ -89,7 +93,7 @@ class LinkController extends Controller
                 $this->currentUserId);
 
             return response()->json($result, 200);
-        } catch (Exception $exception) {
+        } catch (UserIdNotExistsException $exception) {
             return response()->json($exception->getMessage(), 500);
         }
     }
@@ -104,7 +108,7 @@ class LinkController extends Controller
                 $this->currentUserId);
 
             return response()->json($result, 200);
-        } catch (Exception $exception) {
+        } catch (ShortCodeNotExists $exception) {
             return response()->json($exception->getMessage(), 500);
         }
 

@@ -3,8 +3,11 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
+use App\Exceptions\LinkIdNotExistsException;
 use App\Exceptions\MyCustomException;
 use App\Exceptions\OriginalLinkAlreadyExistsException;
+use App\Exceptions\ShortCodeAlreadyExistsException;
+use App\Exceptions\UserIdNotExistsException;
 use App\Interfaces\LinkRepositoryInterface;
 use App\Models\LinkDetails;
 use App\Models\LinkModel;
@@ -89,7 +92,7 @@ class LinkRepository implements LinkRepositoryInterface
     public function checkOriginalAlreadyExist(string $originalUrl)
     {
         if (LinkModel::where('originalUrl', $originalUrl)->exists()) {
-            throw new MyCustomException('This link already exists');
+            throw new OriginalLinkAlreadyExistsException('This link already exists');
         }
 
     }
@@ -97,7 +100,7 @@ class LinkRepository implements LinkRepositoryInterface
     public function checkLinkIdAlreadyExist(string $linkId)
     {
         if (!LinkModel::where('id', $linkId)->exists()) {
-            throw new MyCustomException('This link id doesnt exist');
+            throw new LinkIdNotExistsException('This link id doesnt exists');
         }
 
     }
@@ -105,15 +108,23 @@ class LinkRepository implements LinkRepositoryInterface
     public function checkShortCodeAlreadyExist(string $shortCode)
     {
         if (LinkModel::where('shortCode', $shortCode)->exists()) {
-            throw new OriginalLinkAlreadyExistsException('This shortCode already exist');
+            throw new ShortCodeAlreadyExistsException('This shortCode already exists');
         }
 
     }
 
-    public function checkUserIdExist(string $linkId)
+    public function checkUserIdExist(string $userId)
     {
-        if (!LinkModel::where('id', $linkId)->exists()) {
-            throw new MyCustomException('This link id doesnt exist');
+        if (!LinkModel::where('id', $userId)->exists()) {
+            throw new UserIdNotExistsException('This User Id doesnt exists');
+        }
+
+    }
+
+    public function checkShortCodeNotExist(string $shortCode)
+    {
+        if (!LinkModel::where('shortCode', $shortCode)->exists()) {
+            throw new ShortCodeAlreadyExistsException('This shortCode not exists');
         }
 
     }
