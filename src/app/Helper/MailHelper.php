@@ -13,15 +13,15 @@ class MailHelper
     {
         switch ($action) {
             case 'create':
-                Mail::to($event->user->email)
+                Mail::to($event)
                     ->send(new CreateEmail());             //send to user email
                 break;
             case 'update':
-                Mail::to($event->user->email)
+                Mail::to($event)
                     ->send(new UpdateEmail());             //send to user email
                 break;
             case 'del':
-                Mail::to($event->user->email)
+                Mail::to($event)
                     ->send(new DelEmail());             //send to user email
                 break;
         }

@@ -12,11 +12,11 @@ class UpdateLinkSuccessful
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $user;
+    public string|int $userId;
 
-    public function __construct($user)
+    public function __construct(string|int $userId)
     {
-        $this->$user = $user;
+        $this->userId = $userId;
     }
 
     /**

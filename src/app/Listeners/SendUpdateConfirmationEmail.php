@@ -33,7 +33,7 @@ class SendUpdateConfirmationEmail implements ShouldQueue
     {
         $emailNotificationService = new EmailNotificationService();
         $telegramNotificationService = new TelegramNotificationService();
-        $emailNotificationService->send($event, 'update');
-        $telegramNotificationService->send($event, 'update');
+        $emailNotificationService->send($event->userId, 'update');
+        $telegramNotificationService->send($event->userId, 'update');
     }
 }

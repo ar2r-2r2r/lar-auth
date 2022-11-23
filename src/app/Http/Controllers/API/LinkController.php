@@ -18,7 +18,6 @@ use App\Http\Requests\GetUserLinksRequest;
 use App\Http\Requests\UpdateDelLinkRequest;
 use App\Interfaces\LinkServiceInterface;
 use App\Interfaces\UserServiceInterface;
-use Exception;
 
 class LinkController extends Controller
 {
@@ -43,7 +42,7 @@ class LinkController extends Controller
 
             $result = $this->linkService->createLink($linkDetails,
                 $this->currentUserId);
-            CreateLinkSuccessful::dispatch(auth()->user());
+            CreateLinkSuccessful::dispatch($this->currentUserId);
 
             return response()->json($result, 201);
         } catch (OriginalLinkAlreadyExistsException $exception) {
@@ -59,7 +58,7 @@ class LinkController extends Controller
             $request->setLinkId($request->linkId);
             $result = $this->linkService->updateLink($request->getLinkId(),
                 $this->currentUserId);
-            UpdateLinkSuccessful::dispatch(auth()->user());
+            UpdateLinkSuccessful::dispatch($this->currentUserId);
 
             return response()->json($result, 200);
         } catch (LinkIdNotExistsException $exception) {
@@ -75,7 +74,7 @@ class LinkController extends Controller
             $request->setLinkId($request->linkId);
             $result = $this->linkService->deleteLink($request->getLinkId(),
                 $this->currentUserId);
-            DelLinkSuccessful::dispatch(auth()->user());
+            DelLinkSuccessful::dispatch($this->currentUserId);
 
             return response()->json("Deleted", 200);
         } catch (LinkIdNotExistsException $exception) {

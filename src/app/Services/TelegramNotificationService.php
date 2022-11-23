@@ -4,12 +4,14 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Helper\TgHelper;
+use App\Models\User;
 
 class TelegramNotificationService extends NotificationService
 {
 
-    function send($event, $action)
+    function send($userId, $action)
     {
-        TgHelper::sendMessage($event, $action);
+        $user = User::where('id',$userId) -> first();
+        TgHelper::sendMessage($user, $action);
     }
 }

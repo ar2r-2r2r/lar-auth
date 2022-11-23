@@ -19,18 +19,11 @@ class SendCreateConfirmationEmail implements ShouldQueue
         //
     }
 
-    /**
-     * Handle the event.
-     *
-     * @param object $event
-     *
-     * @return void
-     */
     public function handle($event)
     {
         $emailNotificationService = new EmailNotificationService();
         $telegramNotificationService = new TelegramNotificationService();
-        $emailNotificationService->send($event, 'create');
-        $telegramNotificationService->send($event, 'create');
+        $emailNotificationService->send($event->userId, 'create');
+        $telegramNotificationService->send($event->userId, 'create');
     }
 }

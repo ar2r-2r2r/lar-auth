@@ -30,7 +30,7 @@ class SendDelConfirmationEmail implements ShouldQueue
     {
         $emailNotificationService = new EmailNotificationService();
         $telegramNotificationService = new TelegramNotificationService();
-        $emailNotificationService->send($event, 'del');
-        $telegramNotificationService->send($event, 'del');
+        $emailNotificationService->send($event->userId, 'del');
+        $telegramNotificationService->send($event->userId, 'del');
     }
 }
