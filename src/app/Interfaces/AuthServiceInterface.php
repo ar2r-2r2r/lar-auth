@@ -2,13 +2,15 @@
 
 namespace App\Interfaces;
 
+use App\Http\Requests\LoginUserRequest;
+use App\Http\Requests\RegisterUserRequest;
 use Illuminate\Http\Request;
 
 interface AuthServiceInterface
 {
-    public function register(Request $request);
+    public function register(RegisterUserRequest $request);
 
-    public function login(Request $request);
+    public function login(LoginUserRequest $request);
 
     public function logout(Request $request);
 }

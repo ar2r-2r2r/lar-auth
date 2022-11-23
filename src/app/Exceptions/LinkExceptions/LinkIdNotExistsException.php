@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Exceptions;
+namespace App\Exceptions\LinkExceptions;
 
 use Exception;
 
-class UserIdNotExistsException extends Exception
+class LinkIdNotExistsException extends Exception
 {
     public function __construct($message)
     {

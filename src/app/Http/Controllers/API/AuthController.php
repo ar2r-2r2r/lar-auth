@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\API;
 
+use App\Exceptions\AuthExceptions\EmailAlreadyExistsException;
+use App\Exceptions\AuthExceptions\EmailAndPasswordNotMatchException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\RegisterUserRequest;
@@ -27,8 +29,8 @@ class AuthController extends Controller
             $user = $this->authService->register($request);
 
             return response()->json('User created Successfully!', 201);
-        } catch (Exception $exception) {
-            return response()->json($exception, 500);
+        } catch (EmailAlreadyExistsException $exception) {
+            return response()->json($exception->getMessage(), 500);
         }
 
     }
@@ -40,8 +42,8 @@ class AuthController extends Controller
             $response = $this->authService->login($request);
 
             return response()->json($response, 200);
-        } catch (Exception $exception) {
-            return response()->json($exception, 500);
+        } catch (EmailAndPasswordNotMatchException $exception) {
+            return response()->json($exception->getMessage(), 500);
         }
 
     }
@@ -53,7 +55,7 @@ class AuthController extends Controller
 
             return response()->json('User logout Successfully', 200);
         } catch (Exception $exception) {
-            return response()->json($exception, 500);
+            return response()->json($exception->getMessage(), 500);
         }
 
     }

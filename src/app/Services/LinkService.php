@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Exceptions\ShortCodeAlreadyExistsException;
+use App\Exceptions\LinkExceptions\ShortCodeAlreadyExistsException;
 use App\Factories\LinkModelFactory\LinkModelFactory;
 use App\Helper\Util;
 use App\Interfaces\LinkRepositoryInterface;

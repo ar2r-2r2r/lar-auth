@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Exceptions;
+namespace App\Exceptions\LinkExceptions;
 
 use Exception;
 
-class ShortCodeNotExists extends Exception
+class OriginalLinkAlreadyExistsException extends Exception
 {
     public function __construct($message)
     {

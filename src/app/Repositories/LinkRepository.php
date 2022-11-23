@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
-use App\Exceptions\LinkIdNotExistsException;
+use App\Exceptions\LinkExceptions\LinkIdNotExistsException;
+use App\Exceptions\LinkExceptions\OriginalLinkAlreadyExistsException;
+use App\Exceptions\LinkExceptions\ShortCodeAlreadyExistsException;
+use App\Exceptions\LinkExceptions\UserIdNotExistsException;
 use App\Exceptions\MyCustomException;
-use App\Exceptions\OriginalLinkAlreadyExistsException;
-use App\Exceptions\ShortCodeAlreadyExistsException;
-use App\Exceptions\UserIdNotExistsException;
 use App\Interfaces\LinkRepositoryInterface;
 use App\Models\LinkDetails;
 use App\Models\LinkModel;

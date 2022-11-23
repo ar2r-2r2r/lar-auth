@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Exceptions;
+namespace App\Exceptions\AuthExceptions;
 
 use Exception;
 
-class LinkIdNotExistsException extends Exception
+class EmailAlreadyExistsException extends Exception
 {
     public function __construct($message)
     {
