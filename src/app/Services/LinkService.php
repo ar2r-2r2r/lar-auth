@@ -77,6 +77,7 @@ class LinkService implements LinkServiceInterface
 
     public function deleteLink($linkId, int|string $currentUserId)
     {
+        $this->linkRepository->checkLinkIdAlreadyExist($linkId);
         $linkId = (int)$linkId;
         $this->linkModel->setUserId($currentUserId);
         $this->linkModel->setId($linkId);
@@ -88,8 +89,8 @@ class LinkService implements LinkServiceInterface
         int|string $userId,
         int|string $currentUserId
     ): Collection {
+        $this->linkRepository->checkUserIdExist($userId);
         $this->linkModel->setUserId($userId);
-
         return $this->linkRepository->getAllByUser($this->linkModel->getUserId(),
             $currentUserId);
     }

@@ -45,4 +45,6 @@ interface LinkRepositoryInterface
     public function checkOriginalAlreadyExist(string $originalUrl);
 
     public function checkLinkIdAlreadyExist(string $linkId);
+    public function checkShortCodeAlreadyExist(string $shortCode);
+    public function checkUserIdExist(string $linkId);
 }

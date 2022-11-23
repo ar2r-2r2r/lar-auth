@@ -105,7 +105,15 @@ class LinkRepository implements LinkRepositoryInterface
     public function checkShortCodeAlreadyExist(string $shortCode)
     {
         if (LinkModel::where('shortCode', $shortCode)->exists()) {
-            throw new OriginalLinkAlreadyExistsException('Created Short Code already exists');
+            throw new OriginalLinkAlreadyExistsException('This shortCode already exist');
+        }
+
+    }
+
+    public function checkUserIdExist(string $linkId)
+    {
+        if (!LinkModel::where('id', $linkId)->exists()) {
+            throw new MyCustomException('This link id doesnt exist');
         }
 
     }
