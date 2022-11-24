@@ -12,7 +12,7 @@ class LinkModel extends Model
 
     protected $table = 'links';
     protected int $id;                          // internal unique identifier of this link
-    protected int $userId;                      // unique identifier of user who created that link
+    protected int|string $userId;                      // unique identifier of user who created that link
     protected string $originalUrl;
     protected string $shortCode;
     protected bool $isPublic;                   // determine if link is public or private
@@ -42,7 +42,7 @@ class LinkModel extends Model
     /**
      * @return int
      */
-    public function getUserId(): int
+    public function getUserId(): int|string
     {
         return $this->userId;
     }

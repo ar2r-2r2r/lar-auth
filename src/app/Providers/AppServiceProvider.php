@@ -4,13 +4,15 @@ namespace App\Providers;
 
 use App\Factories\LinkModelFactory\LinkModelFactory;
 use App\Interfaces\AuthServiceInterface;
-use App\Interfaces\LinkServiceInterface;
+use App\Interfaces\LinkServiceProxyInterface;
 use App\Interfaces\UserServiceInterface;
 use App\Repositories\AuthRepository;
 use App\Repositories\LinkRepository;
 use App\Repositories\UserRepository;
 use App\Services\AuthService;
+use App\Services\CacheService;
 use App\Services\LinkService;
+use App\Services\LinkServiceProxy;
 use App\Services\UserService;
 use Illuminate\Support\ServiceProvider;
 
@@ -29,9 +31,9 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(UserServiceInterface::class, function () {
             return new UserService(new UserRepository());
         });
-        $this->app->bind(LinkServiceInterface::class, function () {
-            return new LinkService(new LinkRepository(),
-                new LinkModelFactory());
+        $this->app->bind(LinkServiceProxyInterface::class, function () {
+            return new LinkServiceProxy(new LinkService(new LinkRepository(),
+                new LinkModelFactory()), new CacheService());
         });
 
 

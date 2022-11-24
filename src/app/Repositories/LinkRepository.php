@@ -27,7 +27,7 @@ class LinkRepository implements LinkRepositoryInterface
             'originalUrl' => $linkDetails->getOriginalUrl(),
             'shortCode' => $shortCode,
             'isPublic' => $linkDetails->getIsPublic(),
-        ])->firstOrFail();
+        ]);
     }
 
     public function update(

@@ -7,13 +7,12 @@ use App\Exceptions\LinkExceptions\ShortCodeAlreadyExistsException;
 use App\Factories\LinkModelFactory\LinkModelFactory;
 use App\Helper\Util;
 use App\Interfaces\LinkRepositoryInterface;
-use App\Interfaces\LinkServiceInterface;
+use App\Interfaces\LinkServiceProxyInterface;
 use App\Models\LinkDetails;
 use App\Models\LinkModel;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Cache;
 
-class LinkService implements LinkServiceInterface
+class LinkService implements LinkServiceProxyInterface
 {
     private LinkRepositoryInterface $linkRepository;
     private LinkModelFactory $linkModelFactory;
@@ -52,7 +51,6 @@ class LinkService implements LinkServiceInterface
             $this->linkModel->getShortCode(),
             $linkDetails
         );
-        Cache::put('modelLink', '$result', 300);
 
         return $result;
     }
@@ -70,7 +68,6 @@ class LinkService implements LinkServiceInterface
             $this->linkModel->getUserId(),
             $this->linkModel->getId(),
             $this->linkModel->getShortCode());
-        Cache::put('modelLink', '$result', 300);
 
         return $result;
     }

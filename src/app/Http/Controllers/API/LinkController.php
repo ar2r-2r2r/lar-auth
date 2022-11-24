@@ -16,20 +16,20 @@ use App\Http\Requests\CreateLinkRequest;
 use App\Http\Requests\GetOriginalLinkRequest;
 use App\Http\Requests\GetUserLinksRequest;
 use App\Http\Requests\UpdateDelLinkRequest;
-use App\Interfaces\LinkServiceInterface;
+use App\Interfaces\LinkServiceProxyInterface;
 use App\Interfaces\UserServiceInterface;
 
 class LinkController extends Controller
 {
-    private LinkServiceInterface $linkService;
+    private LinkServiceProxyInterface $linkServiceProxy;
     private UserServiceInterface $userService;
     private int|string $currentUserId;
 
     public function __construct(
-        LinkServiceInterface $linkService,
+        LinkServiceProxyInterface $linkServiceProxy,
         UserServiceInterface $userService
     ) {
-        $this->linkService = $linkService;
+        $this->linkServiceProxy = $linkServiceProxy;
         $this->userService = $userService;
         $this->currentUserId = $this->userService->getId();
     }
@@ -40,7 +40,7 @@ class LinkController extends Controller
             $request->validated();
             $linkDetails = $request->getLinkDetails($request);
 
-            $result = $this->linkService->createLink($linkDetails,
+            $result = $this->linkServiceProxy->createLink($linkDetails,
                 $this->currentUserId);
             CreateLinkSuccessful::dispatch($this->currentUserId);
 
@@ -56,7 +56,7 @@ class LinkController extends Controller
         try {
             $request->validated();
             $request->setLinkId($request->linkId);
-            $result = $this->linkService->updateLink($request->getLinkId(),
+            $result = $this->linkServiceProxy->updateLink($request->getLinkId(),
                 $this->currentUserId);
             UpdateLinkSuccessful::dispatch($this->currentUserId);
 
@@ -72,7 +72,7 @@ class LinkController extends Controller
         try {
             $request->validated();
             $request->setLinkId($request->linkId);
-            $result = $this->linkService->deleteLink($request->getLinkId(),
+            $result = $this->linkServiceProxy->deleteLink($request->getLinkId(),
                 $this->currentUserId);
             DelLinkSuccessful::dispatch($this->currentUserId);
 
@@ -88,7 +88,8 @@ class LinkController extends Controller
             $request->validated();
             $request->setUserId($request->userId);
 
-            $result = $this->linkService->getUserLinks($request->getUserId(),
+            $result
+                = $this->linkServiceProxy->getUserLinks($request->getUserId(),
                 $this->currentUserId);
 
             return response()->json($result, 200);
@@ -103,7 +104,7 @@ class LinkController extends Controller
             $request->validated();
             $request->setShortCode($request->shortCode);
             $result
-                = $this->linkService->getOriginalLink($request->getShortCode(),
+                = $this->linkServiceProxy->getOriginalLink($request->getShortCode(),
                 $this->currentUserId);
 
             return response()->json($result, 200);
