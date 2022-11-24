@@ -135,10 +135,9 @@ class LinkServiceTest extends TestCase
                 $currentUserId
             );
 
-        $result
-            = $this->linkRepositoryMock->getAllByUser($this->linkModelMock->getUserId(),
+        $this->linkRepositoryMock->getAllByUser($this->linkModelMock->getUserId(),
             $currentUserId);
-        $this->assertNotEmpty($result);
+
     }
 
 
