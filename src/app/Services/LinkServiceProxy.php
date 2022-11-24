@@ -48,9 +48,9 @@ class LinkServiceProxy implements LinkServiceProxyInterface
 
     public function getUserLinks(int|string $userId, int|string $currentUserId)
     {
-//        if($this->cacheService->getCache($currentUserId)===null)
-//            $result=$this->linkService->getUserLinks($userId,$currentUserId);
-//        else
+        if($this->cacheService->getCache($currentUserId)===null)
+            $result=$this->linkService->getUserLinks($userId,$currentUserId);
+        else
         $result = $this->cacheService->getCache($currentUserId);
 
         return $result;
