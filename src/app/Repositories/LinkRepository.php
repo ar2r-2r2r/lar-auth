@@ -27,7 +27,7 @@ class LinkRepository implements LinkRepositoryInterface
             'originalUrl' => $linkDetails->getOriginalUrl(),
             'shortCode' => $shortCode,
             'isPublic' => $linkDetails->getIsPublic(),
-        ]);
+        ])->firstOrFail();
     }
 
     public function update(
@@ -63,7 +63,7 @@ class LinkRepository implements LinkRepositoryInterface
                         'isPublic' => 0,
                         'userId' => $currentUserId,
                     ]);
-            })->first();
+            })->firstOrFail();
     }
 
     public function getAll(): Collection
